@@ -3,14 +3,14 @@ import { v4 as uuid } from "uuid";
 
 interface TodoInput {
 	name: string;
-	priority: "high" | "normal" | "low";
+	priority: string;
 	deadline: string;
 }
 
 interface Todo {
 	id: string;
 	name: string;
-	priority: "high" | "normal" | "low";
+	priority: string;
 	deadline: string;
 	done: boolean;
 	created_at: string;
