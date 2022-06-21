@@ -27,40 +27,17 @@ interface TodosContextData {
 	todos: Todo[];
 }
 
-const testTodosList: Todo[] = [
-	{
-		id: uuid(),
-		name: "Test Todo 1",
-		done: false,
-		created_at: new Date().toDateString(),
-		priority: "high",
-		deadline: new Date().toDateString(),
-	},
-	{
-		id: uuid(),
-		name: "Test Todo 2",
-		done: true,
-		created_at: new Date().toDateString(),
-		priority: "normal",
-		deadline: new Date().toDateString(),
-	},
-	{
-		id: uuid(),
-		name: "Test Todo 3",
-		done: false,
-		created_at: new Date().toDateString(),
-		priority: "low",
-		deadline: new Date().toDateString(),
-	},
-];
-
 export const TodosContext = createContext<TodosContextData>({} as TodosContextData);
 
 export function TodosProvider({ children }: TodosProviderProps) {
 	const [todos, setTodos] = useState<Todo[]>([]);
 
 	useEffect(() => {
-		setTodos(testTodosList);
+		const stringifiedTodosList = localStorage.getItem("todos");
+
+		if (stringifiedTodosList) {
+			setTodos(JSON.parse(stringifiedTodosList));
+		}
 	}, []);
 
 	function createTodo(data: TodoInput) {
@@ -71,15 +48,21 @@ export function TodosProvider({ children }: TodosProviderProps) {
 			...data,
 		};
 
-		setTodos((todos) => [...todos, newTodo]);
+		const updatedTodosList = [...todos, newTodo];
+
+		setTodos(updatedTodosList);
+		localStorage.setItem("todos", JSON.stringify(updatedTodosList));
 	}
 
 	function deleteTodo(id: string) {
-		setTodos((todos) => todos.filter((todo) => todo.id !== id));
+		const updatedTodosList = todos.filter((todo) => todo.id !== id);
+
+		setTodos(updatedTodosList);
+		localStorage.setItem("todos", JSON.stringify(updatedTodosList));
 	}
 
 	function toggleTodoDoneStatus(id: string) {
-		const updatedTodoList = todos.map((todo) => {
+		const updatedTodosList = todos.map((todo) => {
 			if (todo.id === id) {
 				todo.done = !todo.done;
 			}
@@ -87,7 +70,8 @@ export function TodosProvider({ children }: TodosProviderProps) {
 			return todo;
 		});
 
-		setTodos(updatedTodoList);
+		setTodos(updatedTodosList);
+		localStorage.setItem("todos", JSON.stringify(updatedTodosList));
 	}
 
 	return (
