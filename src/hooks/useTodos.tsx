@@ -31,7 +31,7 @@ interface TodosContextData {
 	selectIncompleteTodos: () => Promise<void>;
 	createTodo: (data: TodoInput) => Promise<void>;
 	deleteTodo: (id: string) => void;
-	toggleTodoDoneStatus: (id: string) => void;
+	toggleTodoDoneStatus: (id: string) => Promise<void>;
 	todos: Todo[];
 	remainingTodos: number;
 	totalTodos: number;
@@ -41,6 +41,9 @@ export const TodosContext = createContext<TodosContextData>({} as TodosContextDa
 
 export function TodosProvider({ children }: TodosProviderProps) {
 	const [todos, setTodos] = useState<Todo[]>([]);
+	const [showTodosFilter, setShowTodosFilter] = useState<"all" | "done" | "incomplete">(
+		"all"
+	);
 	const [remainingTodos, setRemainingTodos] = useState(0);
 	const [totalTodos, setTotalTodos] = useState(0);
 
@@ -56,30 +59,17 @@ export function TodosProvider({ children }: TodosProviderProps) {
 	async function createTodo(data: TodoInput): Promise<void> {
 		await LocalStorage.createTodo(data);
 
-		const { todos } = await LocalStorage.getTodos();
+		const { todos } = await LocalStorage.getTodos(showTodosFilter);
 
 		setTodos(todos);
 	}
 
-	function deleteTodo(id: string) {
-		const updatedTodosList = todos.filter((todo) => todo.id !== id);
+	async function toggleTodoDoneStatus(id: string): Promise<void> {
+		await LocalStorage.toggleTodoDone(id);
 
-		localStorage.setItem("todos", JSON.stringify(updatedTodosList));
+		const { todos } = await LocalStorage.getTodos(showTodosFilter);
 
-		setTodos(updatedTodosList);
-	}
-
-	function toggleTodoDoneStatus(id: string) {
-		const updatedTodosList = todos.map((todo) => {
-			if (todo.id === id) {
-				todo.done = !todo.done;
-			}
-
-			return todo;
-		});
-
-		setTodos(updatedTodosList);
-		localStorage.setItem("todos", JSON.stringify(updatedTodosList));
+		setTodos(todos);
 	}
 
 	async function selectAllTodos(): Promise<void> {
@@ -98,6 +88,14 @@ export function TodosProvider({ children }: TodosProviderProps) {
 		const { todos } = await LocalStorage.getTodos("incomplete");
 
 		setTodos(todos);
+	}
+
+	function deleteTodo(id: string) {
+		const updatedTodosList = todos.filter((todo) => todo.id !== id);
+
+		localStorage.setItem("todos", JSON.stringify(updatedTodosList));
+
+		setTodos(updatedTodosList);
 	}
 
 	return (
