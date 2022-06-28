@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
+import * as LocalStorage from "../services/localStorage";
 
 function countUnfinished(todos: Todo[]): number {
 	return todos.reduce((count, todo) => {
@@ -10,13 +11,13 @@ function countUnfinished(todos: Todo[]): number {
 
 export interface TodoInput {
 	name: string;
-	deadline: string;
+	description: string;
 }
 
 export interface Todo {
 	id: string;
 	name: string;
-	deadline: string;
+	description: string;
 	done: boolean;
 	created_at: string;
 }
@@ -26,9 +27,9 @@ interface TodosProviderProps {
 }
 
 interface TodosContextData {
-	getAllTodos: () => Todo[];
-	getDoneTodos: () => Todo[];
-	getIncompleteTodos: () => Todo[];
+	selectAllTodos: () => void;
+	selectDoneTodos: () => void;
+	selectIncompleteTodos: () => void;
 	createTodo: (data: TodoInput) => void;
 	deleteTodo: (id: string) => void;
 	toggleTodoDoneStatus: (id: string) => void;
@@ -45,14 +46,12 @@ export function TodosProvider({ children }: TodosProviderProps) {
 	const [totalTodos, setTotalTodos] = useState(0);
 
 	useEffect(() => {
-		const stringifiedTodosList = localStorage.getItem("todos");
-
-		if (stringifiedTodosList) {
-			const todosList = JSON.parse(stringifiedTodosList) as Todo[];
-			setTodos(todosList);
-			setTotalTodos(todosList.length);
-			setRemainingTodos(countUnfinished(todosList));
+		async function getData(): Promise<void> {
+			const { todos } = await LocalStorage.getTodos();
+			setTodos(todos);
 		}
+
+		getData();
 	}, []);
 
 	function updateTodosTotalAndRemaining() {
@@ -85,9 +84,9 @@ export function TodosProvider({ children }: TodosProviderProps) {
 	function deleteTodo(id: string) {
 		const updatedTodosList = todos.filter((todo) => todo.id !== id);
 
-		setTodos(updatedTodosList);
 		localStorage.setItem("todos", JSON.stringify(updatedTodosList));
 
+		setTodos(updatedTodosList);
 		updateTodosTotalAndRemaining();
 	}
 
@@ -106,16 +105,22 @@ export function TodosProvider({ children }: TodosProviderProps) {
 		updateTodosTotalAndRemaining();
 	}
 
-	function getAllTodos() {
-		return [];
+	async function selectAllTodos() {
+		const { todos } = await LocalStorage.getTodos("all");
+
+		setTodos(todos);
 	}
 
-	function getDoneTodos() {
-		return [];
+	async function selectDoneTodos() {
+		const { todos } = await LocalStorage.getTodos("done");
+
+		setTodos(todos);
 	}
 
-	function getIncompleteTodos() {
-		return [];
+	async function selectIncompleteTodos() {
+		const { todos } = await LocalStorage.getTodos("incomplete");
+
+		setTodos(todos);
 	}
 
 	return (
@@ -127,9 +132,9 @@ export function TodosProvider({ children }: TodosProviderProps) {
 				createTodo,
 				deleteTodo,
 				toggleTodoDoneStatus,
-				getAllTodos,
-				getDoneTodos,
-				getIncompleteTodos,
+				selectAllTodos,
+				selectIncompleteTodos,
+				selectDoneTodos,
 			}}
 		>
 			{children}
