@@ -7,7 +7,12 @@ export const GlobalStyles = createGlobalStyle`
     margin: 0;
   }
 
+  html {
+    font-size: 16px;
+  }
+
   body {
-    font-size: 16px
+    font-size: 18px;
+    background-color: ${({ theme }) => theme.colors.veryDarkBlue};
   } 
 `;

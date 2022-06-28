@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Summary } from "./components/Summary";
 import { TodoCreationModal } from "./components/TodoCreationModal";
 import { TodosTable } from "./components/TodosTable";
+import { Main } from "./styles/styles";
 
 function App() {
 	const [todoCreationModalIsOpen, setTodoCreationModalIsOpen] = useState(false);
@@ -15,16 +15,15 @@ function App() {
 	}
 
 	return (
-		<>
+		<Main>
 			<h1>Todos List</h1>
 			<button onClick={openTodoCreationModal}>Create Todo</button>
 			<TodoCreationModal
 				isOpen={todoCreationModalIsOpen}
 				onRequestClose={closeTodoCreationModal}
 			/>
-			<Summary />
 			<TodosTable />
-		</>
+		</Main>
 	);
 }
 

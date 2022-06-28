@@ -1,3 +1,9 @@
-const theme = {};
+import { colors, IColors } from "./colors";
 
-export { theme };
+export interface ITheme {
+	colors: IColors;
+}
+
+export const theme = {
+	colors,
+};
