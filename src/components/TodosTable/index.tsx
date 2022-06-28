@@ -16,7 +16,7 @@ function TodosTable() {
 					<DeleteIcon src={deleteIcon} alt="delete" onClick={() => deleteTodo(todo.id)} />
 				</TodoContainer>
 			))}
-			<Summary remainingTodos={remainingTodos} />
+			{/* <Summary remainingTodos={remainingTodos} /> */}
 		</TodosListContainer>
 	);
 }

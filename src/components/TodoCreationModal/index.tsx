@@ -13,18 +13,18 @@ function TodoCreationModal({
 }: TodoCreationModalProps) {
 	const { createTodo } = useTodos();
 	const [name, setName] = useState("");
-	const [deadline, setDeadline] = useState("");
+	const [description, setDescription] = useState("");
 
 	function handleCreateTodo(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 
 		createTodo({
 			name,
-			deadline,
+			description,
 		});
 
 		setName("");
-		setDeadline("");
+		setDescription("");
 
 		closeModal();
 	}
@@ -41,10 +41,10 @@ function TodoCreationModal({
 				/>
 
 				<input
-					type="date"
-					placeholder="dealine"
-					value={deadline}
-					onChange={(e) => setDeadline(e.target.value)}
+					type="text"
+					placeholder="description"
+					value={description}
+					onChange={(e) => setDescription(e.target.value)}
 				/>
 
 				<button type="submit">Create</button>
