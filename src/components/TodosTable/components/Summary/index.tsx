@@ -1,18 +1,17 @@
-interface SummaryProps {
-	remainingTodos: number;
-	onClick: (option: "all" | "done" | "incomplete") => void;
-}
+import { useTodos } from "../../../../hooks/useTodos";
 
-function Summary({ remainingTodos, onClick }: SummaryProps) {
+function Summary() {
+	const { incomplete, handleChangeTodosFilterOption, deleteCompletedTodos } = useTodos();
+
 	return (
 		<div>
-			<p>{remainingTodos} items left</p>
+			<p>{incomplete} items left</p>
 			<div>
-				<p onClick={() => onClick("all")}>All</p>
-				<p onClick={() => onClick("incomplete")}>Active</p>
-				<p onClick={() => onClick("done")}>Completed</p>
+				<p onClick={() => handleChangeTodosFilterOption("all")}>All</p>
+				<p onClick={() => handleChangeTodosFilterOption("incomplete")}>Active</p>
+				<p onClick={() => handleChangeTodosFilterOption("done")}>Completed</p>
 			</div>
-			<p>Clear Completed</p>
+			<p onClick={deleteCompletedTodos}>Clear Completed</p>
 		</div>
 	);
 }

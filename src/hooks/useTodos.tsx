@@ -1,4 +1,11 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import {
+	createContext,
+	ReactNode,
+	useCallback,
+	useContext,
+	useEffect,
+	useState,
+} from "react";
 import * as LocalStorage from "../services/localStorage";
 
 type option = "all" | "done" | "incomplete";
@@ -21,41 +28,39 @@ interface TodosProviderProps {
 }
 
 interface TodosContextData {
-	selectAllTodos: () => Promise<void>;
-	selectDoneTodos: () => Promise<void>;
-	selectIncompleteTodos: () => Promise<void>;
 	createTodo: (data: TodoInput) => Promise<void>;
 	deleteTodo: (id: string) => Promise<void>;
-	toggleTodoDoneStatus: (id: string) => Promise<void>;
-	handleShowTodosFilterChange: (option: option) => void;
+	deleteCompletedTodos: () => Promise<void>;
+	toggleDone: (id: string) => Promise<void>;
+	handleChangeTodosFilterOption: (option: option) => void;
 	todos: Todo[];
-	remainingTodos: number;
-	totalTodos: number;
+	incomplete: number;
+	total: number;
 }
 
 export const TodosContext = createContext<TodosContextData>({} as TodosContextData);
 
 export function TodosProvider({ children }: TodosProviderProps) {
 	const [todos, setTodos] = useState<Todo[]>([]);
-	const [showTodosFilter, setShowTodosFilter] = useState<option>("all");
-	const [remainingTodos, setRemainingTodos] = useState(0);
-	const [totalTodos, setTotalTodos] = useState(0);
+	const [incomplete, setIncomplete] = useState(0);
+	const [total, setTotal] = useState(0);
+	const [todosFilterOption, setTodosFilterOption] = useState<option>("all");
 
-	useEffect(() => {
-		async function getData(): Promise<void> {
-			const { todos } = await LocalStorage.getTodos();
-			const { incomplete, total } = await LocalStorage.getTodosListInfo();
+	const getTodosData = useCallback(async (option: option = "all"): Promise<void> => {
+		const { todos } = await LocalStorage.getTodos(option);
+		const { incomplete, total } = await LocalStorage.getTodosListInfo();
 
-			setTodos(todos);
-			setTotalTodos(total);
-			setRemainingTodos(incomplete);
-		}
-
-		getData();
+		setTodos(todos);
+		setTotal(total);
+		setIncomplete(incomplete);
 	}, []);
 
-	async function handleShowTodosFilterChange(option: option) {
-		setShowTodosFilter(option);
+	useEffect(() => {
+		getTodosData();
+	}, [getTodosData]);
+
+	async function handleChangeTodosFilterOption(option: option) {
+		setTodosFilterOption(option);
 
 		const { todos } = await LocalStorage.getTodos(option);
 
@@ -65,70 +70,38 @@ export function TodosProvider({ children }: TodosProviderProps) {
 	async function createTodo(data: TodoInput): Promise<void> {
 		await LocalStorage.createTodo(data);
 
-		const { todos } = await LocalStorage.getTodos(showTodosFilter);
-
-		const { incomplete, total } = await LocalStorage.getTodosListInfo();
-
-		setTodos(todos);
-		setTotalTodos(total);
-		setRemainingTodos(incomplete);
+		await getTodosData(todosFilterOption);
 	}
 
-	async function toggleTodoDoneStatus(id: string): Promise<void> {
+	async function toggleDone(id: string): Promise<void> {
 		await LocalStorage.toggleTodoDone(id);
 
-		const { todos } = await LocalStorage.getTodos(showTodosFilter);
-
-		const { incomplete, total } = await LocalStorage.getTodosListInfo();
-
-		setTodos(todos);
-		setTotalTodos(total);
-		setRemainingTodos(incomplete);
+		await getTodosData(todosFilterOption);
 	}
 
 	async function deleteTodo(id: string): Promise<void> {
 		await LocalStorage.deleteTodo(id);
 
-		const { todos } = await LocalStorage.getTodos(showTodosFilter);
-
-		const { incomplete, total } = await LocalStorage.getTodosListInfo();
-
-		setTodos(todos);
-		setTotalTodos(total);
-		setRemainingTodos(incomplete);
+		await getTodosData(todosFilterOption);
 	}
 
-	async function selectAllTodos(): Promise<void> {
-		const { todos } = await LocalStorage.getTodos("all");
+	async function deleteCompletedTodos(): Promise<void> {
+		await LocalStorage.deleteCompletedTodos();
 
-		setTodos(todos);
-	}
-
-	async function selectDoneTodos(): Promise<void> {
-		const { todos } = await LocalStorage.getTodos("done");
-
-		setTodos(todos);
-	}
-
-	async function selectIncompleteTodos(): Promise<void> {
-		const { todos } = await LocalStorage.getTodos("incomplete");
-
-		setTodos(todos);
+		await getTodosData(todosFilterOption);
 	}
 
 	return (
 		<TodosContext.Provider
 			value={{
 				todos,
-				totalTodos,
-				remainingTodos,
+				total,
+				incomplete,
 				createTodo,
 				deleteTodo,
-				toggleTodoDoneStatus,
-				selectAllTodos,
-				selectIncompleteTodos,
-				selectDoneTodos,
-				handleShowTodosFilterChange,
+				deleteCompletedTodos,
+				toggleDone,
+				handleChangeTodosFilterOption,
 			}}
 		>
 			{children}

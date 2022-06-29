@@ -5,24 +5,18 @@ import { CheckBox } from "./components/CheckBox";
 import { Summary } from "./components/Summary";
 
 function TodosTable() {
-	const {
-		todos,
-		toggleTodoDoneStatus,
-		deleteTodo,
-		remainingTodos,
-		handleShowTodosFilterChange,
-	} = useTodos();
+	const { todos, toggleDone, deleteTodo } = useTodos();
 
 	return (
 		<TodosListContainer>
 			{todos.map((todo) => (
 				<TodoContainer key={todo.id}>
-					<CheckBox isActive={todo.done} onClick={() => toggleTodoDoneStatus(todo.id)} />
+					<CheckBox isActive={todo.done} onClick={() => toggleDone(todo.id)} />
 					<h1>{todo.name}</h1>
 					<DeleteIcon src={deleteIcon} alt="delete" onClick={() => deleteTodo(todo.id)} />
 				</TodoContainer>
 			))}
-			<Summary remainingTodos={remainingTodos} onClick={handleShowTodosFilterChange} />
+			<Summary />
 		</TodosListContainer>
 	);
 }
