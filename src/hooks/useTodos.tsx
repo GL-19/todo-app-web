@@ -18,6 +18,7 @@ export interface TodoInput {
 export interface Todo {
 	id: string;
 	name: string;
+	order?: number;
 	description: string;
 	done: boolean;
 	created_at: string;

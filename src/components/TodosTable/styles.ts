@@ -11,7 +11,7 @@ export const TodosListContainer = styled.div`
 	flex-direction: column;
 `;
 
-export const TodoContainer = styled.div`
+export const TodoContainer = styled.li`
 	width: 100%;
 	padding: 0.75rem 0;
 	display: flex;
