@@ -36,6 +36,7 @@ interface TodosContextData {
 	todos: Todo[];
 	incomplete: number;
 	total: number;
+	todosFilterOption: option;
 }
 
 export const TodosContext = createContext<TodosContextData>({} as TodosContextData);
@@ -97,6 +98,7 @@ export function TodosProvider({ children }: TodosProviderProps) {
 				todos,
 				total,
 				incomplete,
+				todosFilterOption,
 				createTodo,
 				deleteTodo,
 				deleteCompletedTodos,

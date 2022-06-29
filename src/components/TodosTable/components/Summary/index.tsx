@@ -1,19 +1,66 @@
+import styled from "styled-components";
 import { useTodos } from "../../../../hooks/useTodos";
 
 function Summary() {
-	const { incomplete, handleChangeTodosFilterOption, deleteCompletedTodos } = useTodos();
+	const {
+		incomplete,
+		todosFilterOption,
+		handleChangeTodosFilterOption,
+		deleteCompletedTodos,
+	} = useTodos();
 
 	return (
-		<div>
+		<SummaryContainer>
 			<p>{incomplete} items left</p>
-			<div>
-				<p onClick={() => handleChangeTodosFilterOption("all")}>All</p>
-				<p onClick={() => handleChangeTodosFilterOption("incomplete")}>Active</p>
-				<p onClick={() => handleChangeTodosFilterOption("done")}>Completed</p>
-			</div>
+
+			<FiltersContainer>
+				<FilterOption
+					onClick={() => handleChangeTodosFilterOption("all")}
+					isActive={todosFilterOption === "all"}
+				>
+					All
+				</FilterOption>
+
+				<FilterOption
+					onClick={() => handleChangeTodosFilterOption("incomplete")}
+					isActive={todosFilterOption === "incomplete"}
+				>
+					Active
+				</FilterOption>
+
+				<FilterOption
+					onClick={() => handleChangeTodosFilterOption("done")}
+					isActive={todosFilterOption === "done"}
+				>
+					Completed
+				</FilterOption>
+			</FiltersContainer>
+
 			<p onClick={deleteCompletedTodos}>Clear Completed</p>
-		</div>
+		</SummaryContainer>
 	);
 }
 
 export { Summary };
+
+interface FilterOptionProps {
+	isActive: boolean;
+}
+
+const FilterOption = styled.p<FilterOptionProps>`
+	color: ${({ isActive }) => (isActive ? "blue" : "black")};
+`;
+
+const SummaryContainer = styled.div`
+	display: flex;
+	justify-content: space-between;
+
+	p {
+		cursor: pointer;
+	}
+`;
+
+const FiltersContainer = styled.div`
+	display: flex;
+	gap: 1rem;
+`;
