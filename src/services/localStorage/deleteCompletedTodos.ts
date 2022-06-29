@@ -6,7 +6,12 @@ export async function deleteCompletedTodos() {
 	if (stringfiedTodos) {
 		const todos = JSON.parse(stringfiedTodos) as TodoData[];
 
-		const updatedTodos = todos.filter((todo) => !todo.done);
+		const updatedTodos = todos
+			.filter((todo) => !todo.done)
+			.map((todo, index) => {
+				todo.order = index + 1;
+				return todo;
+			});
 
 		localStorage.setItem("todos", JSON.stringify(updatedTodos));
 	}
