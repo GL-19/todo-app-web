@@ -5,7 +5,13 @@ import { CheckBox } from "./components/CheckBox";
 import { Summary } from "./components/Summary";
 
 function TodosTable() {
-	const { todos, toggleTodoDoneStatus, deleteTodo, remainingTodos } = useTodos();
+	const {
+		todos,
+		toggleTodoDoneStatus,
+		deleteTodo,
+		remainingTodos,
+		handleShowTodosFilterChange,
+	} = useTodos();
 
 	return (
 		<TodosListContainer>
@@ -16,7 +22,7 @@ function TodosTable() {
 					<DeleteIcon src={deleteIcon} alt="delete" onClick={() => deleteTodo(todo.id)} />
 				</TodoContainer>
 			))}
-			{/* <Summary remainingTodos={remainingTodos} /> */}
+			<Summary remainingTodos={remainingTodos} onClick={handleShowTodosFilterChange} />
 		</TodosListContainer>
 	);
 }

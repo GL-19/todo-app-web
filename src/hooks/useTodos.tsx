@@ -27,7 +27,7 @@ interface TodosContextData {
 	createTodo: (data: TodoInput) => Promise<void>;
 	deleteTodo: (id: string) => Promise<void>;
 	toggleTodoDoneStatus: (id: string) => Promise<void>;
-	setShowTodosFilter: (option: option) => void;
+	handleShowTodosFilterChange: (option: option) => void;
 	todos: Todo[];
 	remainingTodos: number;
 	totalTodos: number;
@@ -53,6 +53,14 @@ export function TodosProvider({ children }: TodosProviderProps) {
 
 		getData();
 	}, []);
+
+	async function handleShowTodosFilterChange(option: option) {
+		setShowTodosFilter(option);
+
+		const { todos } = await LocalStorage.getTodos(option);
+
+		setTodos(todos);
+	}
 
 	async function createTodo(data: TodoInput): Promise<void> {
 		await LocalStorage.createTodo(data);
@@ -120,7 +128,7 @@ export function TodosProvider({ children }: TodosProviderProps) {
 				selectAllTodos,
 				selectIncompleteTodos,
 				selectDoneTodos,
-				setShowTodosFilter,
+				handleShowTodosFilterChange,
 			}}
 		>
 			{children}
