@@ -4,6 +4,7 @@ import { toggleTodoDone } from "./toggleTodoDone";
 import { deleteTodo } from "./deleteTodo";
 import { getTodosListInfo } from "./getTodosListInfo";
 import { deleteCompletedTodos } from "./deleteCompletedTodos";
+import { changeTodoOrder } from "./changeTodoOrder";
 
 export {
 	getTodos,
@@ -12,4 +13,5 @@ export {
 	deleteTodo,
 	getTodosListInfo,
 	deleteCompletedTodos,
+	changeTodoOrder,
 };

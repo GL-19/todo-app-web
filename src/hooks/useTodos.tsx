@@ -34,6 +34,7 @@ interface TodosContextData {
 	deleteCompletedTodos: () => Promise<void>;
 	toggleDone: (id: string) => Promise<void>;
 	handleChangeTodosFilterOption: (option: option) => void;
+	handleChangeTodoOrder: (id: string, newOrder: number) => void;
 	todos: Todo[];
 	incomplete: number;
 	total: number;
@@ -61,14 +62,6 @@ export function TodosProvider({ children }: TodosProviderProps) {
 		getTodosData();
 	}, [getTodosData]);
 
-	async function handleChangeTodosFilterOption(option: option) {
-		setTodosFilterOption(option);
-
-		const { todos } = await LocalStorage.getTodos(option);
-
-		setTodos(todos);
-	}
-
 	async function createTodo(data: TodoInput): Promise<void> {
 		await LocalStorage.createTodo(data);
 
@@ -93,6 +86,20 @@ export function TodosProvider({ children }: TodosProviderProps) {
 		await getTodosData(todosFilterOption);
 	}
 
+	async function handleChangeTodosFilterOption(option: option) {
+		setTodosFilterOption(option);
+
+		const { todos } = await LocalStorage.getTodos(option);
+
+		setTodos(todos);
+	}
+
+	async function handleChangeTodoOrder(id: string, newOrder: number) {
+		await LocalStorage.changeTodoOrder(id, newOrder);
+
+		await getTodosData(todosFilterOption);
+	}
+
 	return (
 		<TodosContext.Provider
 			value={{
@@ -105,6 +112,7 @@ export function TodosProvider({ children }: TodosProviderProps) {
 				deleteCompletedTodos,
 				toggleDone,
 				handleChangeTodosFilterOption,
+				handleChangeTodoOrder,
 			}}
 		>
 			{children}
