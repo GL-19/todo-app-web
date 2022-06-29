@@ -18,6 +18,8 @@ export const TodoContainer = styled.li`
 	align-items: center;
 	justify-content: space-between;
 
+	background-color: ${({ theme }) => theme.colors.veryDarkDesaturatedBlue};
+
 	div {
 		display: flex;
 		align-items: center;

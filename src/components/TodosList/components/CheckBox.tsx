@@ -26,6 +26,8 @@ const CheckboxContainer = styled.div<CheckboxContainerProps>`
 
 	background-color: ${({ isActive }) => (isActive ? "purple" : "inherit")};
 
+	cursor: pointer;
+
 	img {
 		width: 100%;
 		height: 100%;

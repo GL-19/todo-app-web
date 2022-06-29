@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TodoCreationModal } from "./components/TodoCreationModal";
-import { TodosTable } from "./components/TodosTable";
+import { TodosList } from "./components/TodosList";
 import { Main } from "./styles/styles";
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
 				isOpen={todoCreationModalIsOpen}
 				onRequestClose={closeTodoCreationModal}
 			/>
-			<TodosTable />
+			<TodosList />
 		</Main>
 	);
 }
