@@ -9,6 +9,10 @@ export const TodosListContainer = styled.div`
 
 	display: flex;
 	flex-direction: column;
+
+	@media screen and (max-width: 850px) {
+		min-width: 25rem;
+	}
 `;
 
 export const TodoContainer = styled.li`
@@ -26,11 +30,4 @@ export const TodoContainer = styled.li`
 
 		gap: 1.5rem;
 	}
-`;
-
-export const DeleteIcon = styled.img`
-	cursor: pointer;
-
-	width: 1.5rem;
-	height: 1.5rem;
 `;

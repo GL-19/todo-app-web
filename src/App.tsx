@@ -24,6 +24,7 @@ function App() {
 				onRequestClose={closeTodoCreationModal}
 			/>
 			<TodosList />
+			<p>Drag and Drop to reorder list</p>
 		</Main>
 	);
 }

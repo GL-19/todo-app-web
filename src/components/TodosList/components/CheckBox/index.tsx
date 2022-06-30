@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import checkIcon from "../../../images/icon-check.svg";
+import checkIcon from "../../../../images/icon-check.svg";
 
 interface CheckBoxProps {
 	isActive: boolean;
