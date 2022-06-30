@@ -19,8 +19,8 @@ interface CheckboxContainerProps {
 }
 
 const CheckboxContainer = styled.div<CheckboxContainerProps>`
-	width: 2rem;
-	height: 2rem;
+	width: 1.33rem;
+	height: 1.33rem;
 	border-radius: 100%;
 	border: solid 1px white;
 

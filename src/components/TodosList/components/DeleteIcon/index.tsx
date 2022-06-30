@@ -12,6 +12,6 @@ export function DeleteIcon({ onClick }: DeleteIconProps) {
 const DeleteIconContainer = styled.img`
 	cursor: pointer;
 
-	width: 1.5rem;
-	height: 1.5rem;
+	width: 1.33rem;
+	height: 1.33rem;
 `;

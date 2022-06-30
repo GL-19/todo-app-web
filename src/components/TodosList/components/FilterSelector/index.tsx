@@ -32,6 +32,7 @@ export function FilterSelector() {
 
 const FiltersSelectorContainer = styled.div`
 	display: flex;
+	justify-content: center;
 	gap: 1rem;
 `;
 

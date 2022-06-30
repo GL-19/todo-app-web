@@ -57,7 +57,7 @@ function TodosList() {
 														isActive={todo.done}
 														onClick={() => toggleDone(todo.id)}
 													/>
-													<h1>{todo.name}</h1>
+													<p>{todo.name}</p>
 												</div>
 												<DeleteIcon onClick={() => deleteTodo(todo.id)} />
 											</TodoContainer>

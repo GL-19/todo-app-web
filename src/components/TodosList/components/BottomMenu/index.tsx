@@ -26,6 +26,9 @@ const BottomMenuContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 
+	margin-top: 1rem;
+	padding: 0 1rem;
+
 	p {
 		cursor: pointer;
 	}

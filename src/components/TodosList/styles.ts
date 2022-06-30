@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
 export const TodosListContainer = styled.div`
-	margin: 0 auto;
-	max-width: 900px;
-	min-width: 40rem;
+	width: 100%;
+	max-width: 50rem;
 	padding: 2rem;
 	background-color: ${({ theme }) => theme.colors.veryDarkDesaturatedBlue};
 
@@ -11,7 +10,7 @@ export const TodosListContainer = styled.div`
 	flex-direction: column;
 
 	@media screen and (max-width: 850px) {
-		min-width: 25rem;
+		padding: 1.25rem;
 	}
 `;
 
@@ -23,6 +22,7 @@ export const TodoContainer = styled.li`
 	justify-content: space-between;
 
 	background-color: ${({ theme }) => theme.colors.veryDarkDesaturatedBlue};
+	border-bottom: solid 0.25px gray;
 
 	div {
 		display: flex;
