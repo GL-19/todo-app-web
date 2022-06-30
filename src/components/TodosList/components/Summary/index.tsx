@@ -4,8 +4,8 @@ import { useTodos } from "../../../../hooks/useTodos";
 function Summary() {
 	const {
 		incomplete,
-		todosFilterOption,
-		handleChangeTodosFilterOption,
+		todosListOptions,
+		handleChangeTodosListOptions,
 		deleteCompletedTodos,
 	} = useTodos();
 
@@ -15,22 +15,22 @@ function Summary() {
 
 			<FiltersContainer>
 				<FilterOption
-					onClick={() => handleChangeTodosFilterOption("all")}
-					isActive={todosFilterOption === "all"}
+					onClick={() => handleChangeTodosListOptions("all")}
+					isActive={todosListOptions === "all"}
 				>
 					All
 				</FilterOption>
 
 				<FilterOption
-					onClick={() => handleChangeTodosFilterOption("incomplete")}
-					isActive={todosFilterOption === "incomplete"}
+					onClick={() => handleChangeTodosListOptions("incomplete")}
+					isActive={todosListOptions === "incomplete"}
 				>
 					Active
 				</FilterOption>
 
 				<FilterOption
-					onClick={() => handleChangeTodosFilterOption("done")}
-					isActive={todosFilterOption === "done"}
+					onClick={() => handleChangeTodosListOptions("done")}
+					isActive={todosListOptions === "done"}
 				>
 					Completed
 				</FilterOption>

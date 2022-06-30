@@ -6,16 +6,15 @@ import { Summary } from "./components/Summary";
 import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
 
 function TodosList() {
-	const { todos, toggleDone, deleteTodo, handleChangeTodoOrder } = useTodos();
+	const { todos, toggleDone, deleteTodo, changeTodoOrder } = useTodos();
 
 	function handleOnDragEnd(result: DropResult): void {
-		console.log(result);
 		if (!result.destination) return;
 
 		const id = result.draggableId;
-		const newOrder = result.destination.index;
+		const newOrder = todos[result.destination.index].order;
 
-		handleChangeTodoOrder(id, newOrder);
+		changeTodoOrder(id, newOrder);
 	}
 
 	return (
@@ -24,8 +23,8 @@ function TodosList() {
 				<Droppable droppableId="todos">
 					{(provided) => (
 						<ul {...provided.droppableProps} ref={provided.innerRef}>
-							{todos.map((todo) => (
-								<Draggable key={todo.id} draggableId={todo.id} index={todo.order}>
+							{todos.map((todo, index) => (
+								<Draggable key={todo.id} draggableId={todo.id} index={index}>
 									{(provided) => (
 										<TodoContainer
 											{...provided.draggableProps}

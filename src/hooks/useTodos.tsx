@@ -29,16 +29,16 @@ interface TodosProviderProps {
 }
 
 interface TodosContextData {
+	todos: Todo[];
+	incomplete: number;
+	total: number;
+	todosListOptions: option;
 	createTodo: (data: TodoInput) => Promise<void>;
 	deleteTodo: (id: string) => Promise<void>;
 	deleteCompletedTodos: () => Promise<void>;
 	toggleDone: (id: string) => Promise<void>;
-	handleChangeTodosFilterOption: (option: option) => void;
-	handleChangeTodoOrder: (id: string, newOrder: number) => void;
-	todos: Todo[];
-	incomplete: number;
-	total: number;
-	todosFilterOption: option;
+	changeTodoOrder: (id: string, newOrder: number) => void;
+	handleChangeTodosListOptions: (option: option) => void;
 }
 
 export const TodosContext = createContext<TodosContextData>({} as TodosContextData);
@@ -47,7 +47,7 @@ export function TodosProvider({ children }: TodosProviderProps) {
 	const [todos, setTodos] = useState<Todo[]>([]);
 	const [incomplete, setIncomplete] = useState(0);
 	const [total, setTotal] = useState(0);
-	const [todosFilterOption, setTodosFilterOption] = useState<option>("all");
+	const [todosListOptions, setTodosListOptions] = useState<option>("all");
 
 	const getTodosData = useCallback(async (option: option = "all"): Promise<void> => {
 		const { todos } = await LocalStorage.getTodos(option);
@@ -65,39 +65,39 @@ export function TodosProvider({ children }: TodosProviderProps) {
 	async function createTodo(data: TodoInput): Promise<void> {
 		await LocalStorage.createTodo(data);
 
-		await getTodosData(todosFilterOption);
+		await getTodosData(todosListOptions);
 	}
 
 	async function toggleDone(id: string): Promise<void> {
 		await LocalStorage.toggleTodoDone(id);
 
-		await getTodosData(todosFilterOption);
+		await getTodosData(todosListOptions);
 	}
 
 	async function deleteTodo(id: string): Promise<void> {
 		await LocalStorage.deleteTodo(id);
 
-		await getTodosData(todosFilterOption);
+		await getTodosData(todosListOptions);
 	}
 
 	async function deleteCompletedTodos(): Promise<void> {
 		await LocalStorage.deleteCompletedTodos();
 
-		await getTodosData(todosFilterOption);
+		await getTodosData(todosListOptions);
 	}
 
-	async function handleChangeTodosFilterOption(option: option) {
-		setTodosFilterOption(option);
+	async function handleChangeTodosListOptions(option: option) {
+		setTodosListOptions(option);
 
 		const { todos } = await LocalStorage.getTodos(option);
 
 		setTodos(todos);
 	}
 
-	async function handleChangeTodoOrder(id: string, newOrder: number) {
+	async function changeTodoOrder(id: string, newOrder: number) {
 		await LocalStorage.changeTodoOrder(id, newOrder);
 
-		await getTodosData(todosFilterOption);
+		await getTodosData(todosListOptions);
 	}
 
 	return (
@@ -106,13 +106,13 @@ export function TodosProvider({ children }: TodosProviderProps) {
 				todos,
 				total,
 				incomplete,
-				todosFilterOption,
+				todosListOptions,
 				createTodo,
 				deleteTodo,
 				deleteCompletedTodos,
 				toggleDone,
-				handleChangeTodosFilterOption,
-				handleChangeTodoOrder,
+				handleChangeTodosListOptions,
+				changeTodoOrder,
 			}}
 		>
 			{children}
