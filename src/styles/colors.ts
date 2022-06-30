@@ -20,10 +20,10 @@ export const darkColors: IColors = {
 
 export const lightColors: IColors = {
 	brightBlue: "hsl(220, 98%, 61%)",
-	primaryColor: "hsl(234, 39%, 85%)",
-	secondaryColor: "hsl(234, 11%, 52%)",
-	tertiaryColor: "hsl(233, 14%, 35%)",
+	primaryColor: "hsl(235, 19%, 35%)",
+	secondaryColor: "hsl(236, 9%, 61%)",
+	tertiaryColor: "hsl(234, 39%, 85%)",
 	quaternaryColor: "hsl(237, 14%, 26%)",
-	secondaryBackgroundColor: "hsl(235, 18%, 14%)",
-	primaryBackgroundColor: "hsl(235, 21%, 11%)",
+	secondaryBackgroundColor: "hsl(0, 0%, 98%)",
+	primaryBackgroundColor: "hsl(236, 33%, 92%)",
 };

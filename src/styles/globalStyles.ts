@@ -15,6 +15,6 @@ export const GlobalStyles = createGlobalStyle`
   body {
     font-size: 16px;
     background-color: ${({ theme }) => theme.colors.primaryBackgroundColor};
-    color: ${({ theme }) => theme.colors.tertiaryColor};
+    color: ${({ theme }) => theme.colors.secondaryColor};
   } 
 `;

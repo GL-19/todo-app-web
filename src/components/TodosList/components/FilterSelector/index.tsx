@@ -43,7 +43,7 @@ interface FilterOptionProps {
 const FilterOption = styled.p<FilterOptionProps>`
 	cursor: pointer;
 	color: ${({ isActive, theme }) =>
-		isActive ? theme.colors.brightBlue : theme.colors.tertiaryColor};
+		isActive ? theme.colors.brightBlue : theme.colors.secondaryColor};
 
 	font-weight: 700;
 

@@ -11,7 +11,7 @@ function BottomMenu({ isDesktop }: BottomMenuProps) {
 
 	return (
 		<BottomMenuContainer>
-			<p>{incomplete} items left</p>
+			<Text>{incomplete} items left</Text>
 
 			{isDesktop && <FilterSelector />}
 
@@ -32,7 +32,7 @@ const BottomMenuContainer = styled.div`
 
 const ClearDone = styled.p`
 	cursor: pointer;
-	color: ${({ theme }) => theme.colors.tertiaryColor};
+	color: ${({ theme }) => theme.colors.secondaryColor};
 
 	font-weight: 700;
 
@@ -40,4 +40,10 @@ const ClearDone = styled.p`
 	&:active {
 		color: ${({ theme }) => theme.colors.primaryColor};
 	}
+`;
+
+const Text = styled.p`
+	color: ${({ theme }) => theme.colors.secondaryColor};
+
+	font-weight: 700;
 `;
