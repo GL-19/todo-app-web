@@ -15,3 +15,5 @@ export {
 	deleteCompletedTodos,
 	changeTodoOrder,
 };
+
+export * as LocalStorage from ".";

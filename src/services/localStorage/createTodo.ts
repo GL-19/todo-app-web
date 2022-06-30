@@ -1,12 +1,11 @@
 import { TodoData } from "../TodoData";
 import { v4 as uuid } from "uuid";
 
-interface CreateTodoInput {
+interface CreateTodoForm {
 	name: string;
-	description: string;
 }
 
-export async function createTodo(data: CreateTodoInput) {
+export async function createTodo(data: CreateTodoForm) {
 	const stringifiedTodos = localStorage.getItem("todos");
 
 	if (stringifiedTodos) {

@@ -1,16 +1,7 @@
 import { FormEvent, useState } from "react";
-import Modal from "react-modal";
 import { useTodos } from "../../hooks/useTodos";
 
-interface TodoCreationModalProps {
-	isOpen: boolean;
-	onRequestClose: () => void;
-}
-
-function TodoCreationModal({
-	isOpen,
-	onRequestClose: closeModal,
-}: TodoCreationModalProps) {
+function CreateTodoForm() {
 	const { createTodo } = useTodos();
 	const [name, setName] = useState("");
 
@@ -22,12 +13,10 @@ function TodoCreationModal({
 		});
 
 		setName("");
-
-		closeModal();
 	}
 
 	return (
-		<Modal isOpen={isOpen} onRequestClose={closeModal}>
+		<div>
 			<h1>Create Todo</h1>
 			<form action="submit" onSubmit={handleCreateTodo}>
 				<input
@@ -37,10 +26,10 @@ function TodoCreationModal({
 					onChange={(e) => setName(e.target.value)}
 				/>
 
-				<button type="submit">Create</button>
+				<button type="submit">Create Todo</button>
 			</form>
-		</Modal>
+		</div>
 	);
 }
 
-export { TodoCreationModal };
+export { CreateTodoForm };

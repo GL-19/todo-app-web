@@ -6,20 +6,18 @@ import {
 	useEffect,
 	useState,
 } from "react";
-import * as LocalStorage from "../services/localStorage";
+import { LocalStorage } from "../services/localStorage";
 
 type option = "all" | "done" | "incomplete";
 
 export interface TodoInput {
 	name: string;
-	description: string;
 }
 
 export interface Todo {
 	id: string;
 	name: string;
 	order: number;
-	description: string;
 	done: boolean;
 	created_at: string;
 }

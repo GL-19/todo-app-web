@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { TodoCreationModal } from "./components/TodoCreationModal";
-import { TodosList } from "./components/TodosList";
+import { TodoCreationModal, TodosList, CreateTodoForm } from "./components";
 import { Main } from "./styles/styles";
 
 function App() {
@@ -17,7 +16,7 @@ function App() {
 	return (
 		<Main>
 			<h1>Todos List</h1>
-			<button onClick={openTodoCreationModal}>Create Todo</button>
+			<CreateTodoForm />
 
 			<TodoCreationModal
 				isOpen={todoCreationModalIsOpen}
