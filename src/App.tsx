@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { TodoCreationModal, TodosList, CreateTodoForm } from "./components";
+import { useTheme } from "./hooks/useTheme";
 import { Main } from "./styles/styles";
 
 function App() {
 	const [todoCreationModalIsOpen, setTodoCreationModalIsOpen] = useState(false);
+	const { toggleTheme, theme } = useTheme();
 
 	function openTodoCreationModal() {
 		setTodoCreationModalIsOpen(true);
@@ -16,6 +18,10 @@ function App() {
 	return (
 		<Main>
 			<h1>Todos List</h1>
+
+			<button onClick={toggleTheme}>
+				{theme === "dark" ? "Change to light theme" : "Change to dark theme"}
+			</button>
 			<CreateTodoForm />
 
 			<TodoCreationModal
