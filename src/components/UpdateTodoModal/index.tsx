@@ -7,14 +7,11 @@ interface TodoCreationModalProps {
 	onRequestClose: () => void;
 }
 
-function TodoCreationModal({
-	isOpen,
-	onRequestClose: closeModal,
-}: TodoCreationModalProps) {
+function UpdateTodoModal({ isOpen, onRequestClose: closeModal }: TodoCreationModalProps) {
 	const { createTodo } = useTodos();
 	const [name, setName] = useState("");
 
-	function handleCreateTodo(event: FormEvent<HTMLFormElement>) {
+	function handleUpdateTodo(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 
 		createTodo({
@@ -29,7 +26,7 @@ function TodoCreationModal({
 	return (
 		<Modal isOpen={isOpen} onRequestClose={closeModal}>
 			<h1>Create Todo</h1>
-			<form action="submit" onSubmit={handleCreateTodo}>
+			<form action="submit" onSubmit={handleUpdateTodo}>
 				<input
 					type="text"
 					placeholder="name"
@@ -43,4 +40,4 @@ function TodoCreationModal({
 	);
 }
 
-export { TodoCreationModal };
+export { UpdateTodoModal as TodoCreationModal };

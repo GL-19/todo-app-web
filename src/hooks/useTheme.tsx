@@ -1,4 +1,4 @@
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider as StyledThemeProvider } from "styled-components";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { darkTheme, lightTheme } from "../styles/theme";
 
@@ -7,7 +7,7 @@ interface ThemeContextData {
 	theme: "dark" | "light";
 }
 
-interface ThemesProviderProps {
+interface ThemeProviderProps {
 	children: ReactNode;
 }
 
@@ -15,7 +15,7 @@ type themeOptions = "dark" | "light";
 
 export const ThemeContext = createContext<ThemeContextData>({} as ThemeContextData);
 
-export function ThemesProvider({ children }: ThemesProviderProps) {
+export function ThemeProvider({ children }: ThemeProviderProps) {
 	const [theme, setTheme] = useState<themeOptions>("dark");
 
 	useEffect(() => {
@@ -39,11 +39,11 @@ export function ThemesProvider({ children }: ThemesProviderProps) {
 	}
 
 	return (
-		<ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
+		<StyledThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
 			<ThemeContext.Provider value={{ theme, toggleTheme }}>
 				{children}
 			</ThemeContext.Provider>
-		</ThemeProvider>
+		</StyledThemeProvider>
 	);
 }
 

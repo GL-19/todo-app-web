@@ -1,19 +1,9 @@
-import { useState } from "react";
-import { TodoCreationModal, TodosList, CreateTodoForm } from "./components";
+import { TodosList, CreateTodoForm } from "./components";
 import { useTheme } from "./hooks/useTheme";
 import { Main } from "./styles/styles";
 
 function App() {
-	const [todoCreationModalIsOpen, setTodoCreationModalIsOpen] = useState(false);
 	const { toggleTheme, theme } = useTheme();
-
-	function openTodoCreationModal() {
-		setTodoCreationModalIsOpen(true);
-	}
-
-	function closeTodoCreationModal() {
-		setTodoCreationModalIsOpen(false);
-	}
 
 	return (
 		<Main>
@@ -24,10 +14,6 @@ function App() {
 			</button>
 			<CreateTodoForm />
 
-			<TodoCreationModal
-				isOpen={todoCreationModalIsOpen}
-				onRequestClose={closeTodoCreationModal}
-			/>
 			<TodosList />
 			<p>Drag and Drop to reorder list</p>
 		</Main>

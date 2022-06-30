@@ -12,7 +12,7 @@ export function FilterMenu() {
 const FilterMenuContainer = styled.div`
 	margin: 0 auto;
 	margin-top: 1rem;
-	max-width: 900px;
+	max-width: 45rem;
 	width: 100%;
 	padding: 2rem;
 	background-color: ${({ theme }) => theme.colors.secondaryBackgroundColor};
@@ -29,6 +29,6 @@ const FilterMenuContainer = styled.div`
 
 	@media screen and (max-width: 450px) {
 		min-width: 15rem;
-		padding: 0.5rem;
+		padding: 1rem 0.5rem;
 	}
 `;

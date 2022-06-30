@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 export const TodosListContainer = styled.div`
 	width: 100%;
-	max-width: 50rem;
-	padding: 2rem;
+	max-width: 45rem;
+	padding: 1.25rem 2rem;
 	background-color: ${({ theme }) => theme.colors.secondaryBackgroundColor};
 	border-radius: 0.25rem;
 
@@ -11,7 +11,7 @@ export const TodosListContainer = styled.div`
 	flex-direction: column;
 
 	@media screen and (max-width: 850px) {
-		padding: 1.25rem;
+		padding: 1.25rem 1.25rem;
 	}
 `;
 

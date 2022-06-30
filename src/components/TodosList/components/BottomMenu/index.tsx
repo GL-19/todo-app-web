@@ -26,8 +26,8 @@ const BottomMenuContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 
-	margin-top: 1rem;
-	padding: 0 1rem;
+	margin-top: 1.25rem;
+	padding: 0 1.25rem;
 `;
 
 const ClearDone = styled.p`

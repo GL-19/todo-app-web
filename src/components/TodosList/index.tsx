@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import { useTodos } from "../../hooks/useTodos";
+import { useIsDesktop } from "../../hooks/useIsDesktop";
 
 import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
 
@@ -7,26 +7,8 @@ import { BottomMenu, CheckBox, DeleteIcon, FilterMenu } from "./components";
 import { TodoContainer, TodoName, TodosListContainer } from "./styles";
 
 function TodosList() {
-	const [isDesktop, setIsDesktop] = useState(true);
 	const { todos, toggleDone, deleteTodo, changeTodoOrder } = useTodos();
-
-	useEffect(() => {
-		const desktopWidthThreshold = 850;
-
-		const updateMedia = () => {
-			if (window.innerWidth > desktopWidthThreshold) {
-				setIsDesktop(true);
-			} else {
-				setIsDesktop(false);
-			}
-		};
-
-		window.addEventListener("resize", updateMedia);
-
-		updateMedia();
-
-		return () => window.removeEventListener("resize", updateMedia);
-	}, []);
+	const isDesktop = useIsDesktop();
 
 	function handleOnDragEnd(result: DropResult): void {
 		if (!result.destination) return;
