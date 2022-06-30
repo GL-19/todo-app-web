@@ -4,7 +4,8 @@ export const TodosListContainer = styled.div`
 	width: 100%;
 	max-width: 50rem;
 	padding: 2rem;
-	background-color: ${({ theme }) => theme.colors.veryDarkDesaturatedBlue};
+	background-color: ${({ theme }) => theme.colors.secondaryBackgroundColor};
+	border-radius: 0.25rem;
 
 	display: flex;
 	flex-direction: column;
@@ -16,13 +17,13 @@ export const TodosListContainer = styled.div`
 
 export const TodoContainer = styled.li`
 	width: 100%;
-	padding: 0.75rem 0;
+	padding: 1rem 0;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 
-	background-color: ${({ theme }) => theme.colors.veryDarkDesaturatedBlue};
-	border-bottom: solid 0.25px gray;
+	background-color: ${({ theme }) => theme.colors.secondaryBackgroundColor};
+	border-bottom: solid 0.25px ${({ theme }) => theme.colors.tertiaryColor};
 
 	div {
 		display: flex;
@@ -30,4 +31,18 @@ export const TodoContainer = styled.li`
 
 		gap: 1.5rem;
 	}
+`;
+
+interface TodoNameProps {
+	isActive: boolean;
+}
+
+export const TodoName = styled.p<TodoNameProps>`
+	font-size: 1.125rem;
+
+	cursor: pointer;
+
+	color: ${({ isActive, theme }) =>
+		isActive ? theme.colors.tertiaryColor : theme.colors.primaryColor};
+	text-decoration: ${({ isActive }) => (isActive ? "line-through" : "none")};
 `;

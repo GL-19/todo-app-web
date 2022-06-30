@@ -15,7 +15,7 @@ function BottomMenu({ isDesktop }: BottomMenuProps) {
 
 			{isDesktop && <FilterSelector />}
 
-			<p onClick={deleteCompletedTodos}>Clear Completed</p>
+			<ClearDone onClick={deleteCompletedTodos}>Clear Completed</ClearDone>
 		</BottomMenuContainer>
 	);
 }
@@ -28,8 +28,16 @@ const BottomMenuContainer = styled.div`
 
 	margin-top: 1rem;
 	padding: 0 1rem;
+`;
 
-	p {
-		cursor: pointer;
+const ClearDone = styled.p`
+	cursor: pointer;
+	color: ${({ theme }) => theme.colors.tertiaryColor};
+
+	font-weight: 700;
+
+	&:hover,
+	&:active {
+		color: ${({ theme }) => theme.colors.primaryColor};
 	}
 `;

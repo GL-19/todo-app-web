@@ -4,11 +4,11 @@ import { useTodos } from "../../hooks/useTodos";
 import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
 
 import { BottomMenu, CheckBox, DeleteIcon, FilterMenu } from "./components";
-import { TodoContainer, TodosListContainer } from "./styles";
+import { TodoContainer, TodoName, TodosListContainer } from "./styles";
 
 function TodosList() {
-	const { todos, toggleDone, deleteTodo, changeTodoOrder } = useTodos();
 	const [isDesktop, setIsDesktop] = useState(true);
+	const { todos, toggleDone, deleteTodo, changeTodoOrder } = useTodos();
 
 	useEffect(() => {
 		const desktopWidthThreshold = 850;
@@ -57,9 +57,11 @@ function TodosList() {
 														isActive={todo.done}
 														onClick={() => toggleDone(todo.id)}
 													/>
-													<p>{todo.name}</p>
+													<TodoName isActive={todo.done}>{todo.name}</TodoName>
 												</div>
-												<DeleteIcon onClick={() => deleteTodo(todo.id)} />
+												<div>
+													<DeleteIcon onClick={() => deleteTodo(todo.id)} />
+												</div>
 											</TodoContainer>
 										)}
 									</Draggable>
@@ -71,6 +73,7 @@ function TodosList() {
 				</DragDropContext>
 				<BottomMenu isDesktop={isDesktop} />
 			</TodosListContainer>
+
 			{!isDesktop && <FilterMenu />}
 		</>
 	);

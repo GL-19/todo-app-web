@@ -22,7 +22,7 @@ const CheckboxContainer = styled.div<CheckboxContainerProps>`
 	width: 1.33rem;
 	height: 1.33rem;
 	border-radius: 100%;
-	border: solid 1px white;
+	border: solid 1px ${({ theme }) => theme.colors.tertiaryColor};
 
 	background-color: ${({ isActive }) => (isActive ? "purple" : "inherit")};
 
@@ -31,5 +31,9 @@ const CheckboxContainer = styled.div<CheckboxContainerProps>`
 	img {
 		width: 100%;
 		height: 100%;
+	}
+
+	&:hover {
+		border: solid 2px ${({ theme }) => theme.colors.brightBlue};
 	}
 `;

@@ -9,10 +9,12 @@ export const GlobalStyles = createGlobalStyle`
 
   html {
     font-size: 16px;
+    font-family: 'Josefin Sans', sans-serif;;
   }
 
   body {
-    font-size: 18px;
-    background-color: ${({ theme }) => theme.colors.veryDarkBlue};
+    font-size: 16px;
+    background-color: ${({ theme }) => theme.colors.primaryBackgroundColor};
+    color: ${({ theme }) => theme.colors.tertiaryColor};
   } 
 `;

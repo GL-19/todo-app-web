@@ -13,9 +13,10 @@ const FilterMenuContainer = styled.div`
 	margin: 0 auto;
 	margin-top: 1rem;
 	max-width: 900px;
-	min-width: 40rem;
+	width: 100%;
 	padding: 2rem;
-	background-color: ${({ theme }) => theme.colors.veryDarkDesaturatedBlue};
+	background-color: ${({ theme }) => theme.colors.secondaryBackgroundColor};
+	border-radius: 0.25rem;
 
 	display: flex;
 	flex-direction: column;

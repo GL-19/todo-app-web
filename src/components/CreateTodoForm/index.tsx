@@ -17,11 +17,10 @@ function CreateTodoForm() {
 
 	return (
 		<div>
-			<h1>Create Todo</h1>
 			<form action="submit" onSubmit={handleCreateTodo}>
 				<input
 					type="text"
-					placeholder="name"
+					placeholder="Create a new todo..."
 					value={name}
 					onChange={(e) => setName(e.target.value)}
 				/>

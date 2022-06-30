@@ -1,9 +1,13 @@
-import { colors, IColors } from "./colors";
+import { darkColors, lightColors, IColors } from "./colors";
 
 export interface ITheme {
 	colors: IColors;
 }
 
-export const theme = {
-	colors,
+export const darkTheme: ITheme = {
+	colors: darkColors,
+};
+
+export const lightTheme: ITheme = {
+	colors: lightColors,
 };

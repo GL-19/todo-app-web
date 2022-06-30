@@ -1,17 +1,29 @@
 export interface IColors {
-	veryDarkBlue: string;
-	veryDarkDesaturatedBlue: string;
-	lightGrayishBlue: string;
-	darkGrayishBlue: string;
-	veryDarkGrayishBlue: string;
-	grayishBlue: string;
+	primaryBackgroundColor: string;
+	secondaryBackgroundColor: string;
+	primaryColor: string;
+	tertiaryColor: string;
+	quaternaryColor: string;
+	secondaryColor: string;
+	brightBlue: string;
 }
 
-export const colors: IColors = {
-	lightGrayishBlue: "hsl(234, 39%, 85%)",
-	grayishBlue: "hsl(234, 11%, 52%)",
-	darkGrayishBlue: "hsl(233, 14%, 35%)",
-	veryDarkGrayishBlue: "hsl(237, 14%, 26%)",
-	veryDarkDesaturatedBlue: "hsl(235, 24%, 19%)",
-	veryDarkBlue: "hsl(235, 21%, 11%)",
+export const darkColors: IColors = {
+	brightBlue: "hsl(220, 98%, 61%)",
+	primaryColor: "hsl(234, 39%, 85%)",
+	secondaryColor: "hsl(234, 11%, 52%)",
+	tertiaryColor: "hsl(233, 14%, 35%)",
+	quaternaryColor: "hsl(237, 14%, 26%)",
+	secondaryBackgroundColor: "hsl(235, 18%, 14%)",
+	primaryBackgroundColor: "hsl(235, 21%, 11%)",
+};
+
+export const lightColors: IColors = {
+	brightBlue: "hsl(220, 98%, 61%)",
+	primaryColor: "hsl(234, 39%, 85%)",
+	secondaryColor: "hsl(234, 11%, 52%)",
+	tertiaryColor: "hsl(233, 14%, 35%)",
+	quaternaryColor: "hsl(237, 14%, 26%)",
+	secondaryBackgroundColor: "hsl(235, 18%, 14%)",
+	primaryBackgroundColor: "hsl(235, 21%, 11%)",
 };
