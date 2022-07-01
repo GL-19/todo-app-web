@@ -6,9 +6,13 @@ export interface IColors {
 	quaternaryColor: string;
 	secondaryColor: string;
 	brightBlue: string;
+	cyan: string;
+	purple: string;
 }
 
 export const darkColors: IColors = {
+	cyan: "hsl(192, 100%, 67%)",
+	purple: "hsl(280, 87%, 65%)",
 	brightBlue: "hsl(220, 98%, 61%)",
 	primaryColor: "hsl(234, 39%, 85%)",
 	secondaryColor: "hsl(234, 11%, 52%)",
@@ -19,6 +23,8 @@ export const darkColors: IColors = {
 };
 
 export const lightColors: IColors = {
+	cyan: "hsl(192, 100%, 67%)",
+	purple: "hsl(280, 87%, 65%)",
 	brightBlue: "hsl(220, 98%, 61%)",
 	primaryColor: "hsl(235, 19%, 35%)",
 	secondaryColor: "hsl(236, 9%, 61%)",

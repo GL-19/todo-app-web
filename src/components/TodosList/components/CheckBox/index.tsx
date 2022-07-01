@@ -24,16 +24,25 @@ const CheckboxContainer = styled.div<CheckboxContainerProps>`
 	border-radius: 100%;
 	border: solid 1px ${({ theme }) => theme.colors.tertiaryColor};
 
-	background-color: ${({ isActive }) => (isActive ? "purple" : "inherit")};
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	background: no-repeat
+		${({ isActive, theme }) =>
+			isActive
+				? `linear-gradient(to left top, ${theme.colors.purple}, ${theme.colors.cyan})`
+				: "inherit"};
 
 	cursor: pointer;
 
 	img {
-		width: 100%;
-		height: 100%;
+		width: 50%;
+		height: 50%;
 	}
 
 	&:hover {
-		border: solid 2px ${({ theme }) => theme.colors.brightBlue};
+		border: solid 2px
+			${({ theme, isActive }) => (isActive ? "none" : theme.colors.brightBlue)};
 	}
 `;
