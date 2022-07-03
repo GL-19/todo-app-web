@@ -1,11 +1,4 @@
-import {
-	createContext,
-	ReactNode,
-	useCallback,
-	useContext,
-	useEffect,
-	useState,
-} from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { LocalStorage } from "../services/localStorage";
 
 type option = "all" | "done" | "incomplete";
@@ -20,10 +13,6 @@ export interface Todo {
 	order: number;
 	done: boolean;
 	created_at: string;
-}
-
-interface TodosProviderProps {
-	children: ReactNode;
 }
 
 interface TodosContextData {
@@ -41,7 +30,7 @@ interface TodosContextData {
 
 export const TodosContext = createContext<TodosContextData>({} as TodosContextData);
 
-export function TodosProvider({ children }: TodosProviderProps) {
+export const TodosProvider: React.FC = ({ children }) => {
 	const [todos, setTodos] = useState<Todo[]>([]);
 	const [incomplete, setIncomplete] = useState(0);
 	const [total, setTotal] = useState(0);
@@ -116,7 +105,7 @@ export function TodosProvider({ children }: TodosProviderProps) {
 			{children}
 		</TodosContext.Provider>
 	);
-}
+};
 
 export function useTodos() {
 	const context = useContext(TodosContext);

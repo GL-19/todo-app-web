@@ -1,5 +1,5 @@
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { darkTheme, lightTheme } from "../styles/theme";
 
 interface ThemeContextData {
@@ -7,15 +7,11 @@ interface ThemeContextData {
 	theme: "dark" | "light";
 }
 
-interface ThemeProviderProps {
-	children: ReactNode;
-}
-
 type themeOptions = "dark" | "light";
 
 export const ThemeContext = createContext<ThemeContextData>({} as ThemeContextData);
 
-export function ThemeProvider({ children }: ThemeProviderProps) {
+export const ThemeProvider: React.FC = ({ children }) => {
 	const [theme, setTheme] = useState<themeOptions>("dark");
 
 	useEffect(() => {
@@ -45,7 +41,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 			</ThemeContext.Provider>
 		</StyledThemeProvider>
 	);
-}
+};
 
 export function useTheme() {
 	const context = useContext(ThemeContext);

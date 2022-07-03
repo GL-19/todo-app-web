@@ -1,15 +1,17 @@
-import ReactDOM from "react-dom/client";
+import { render } from "react-dom";
 import App from "./App";
 import { ThemeProvider } from "./hooks/useTheme";
 import { TodosProvider } from "./hooks/useTodos";
 import { GlobalStyles } from "./styles/GlobalStyles";
 
-const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
-root.render(
+const root = document.getElementById("root") as HTMLElement;
+
+render(
 	<TodosProvider>
 		<ThemeProvider>
 			<GlobalStyles />
 			<App />
 		</ThemeProvider>
-	</TodosProvider>
+	</TodosProvider>,
+	root
 );
