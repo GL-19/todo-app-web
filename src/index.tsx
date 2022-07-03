@@ -6,10 +6,10 @@ import { GlobalStyles } from "./styles/GlobalStyles";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
-	<ThemeProvider>
-		<TodosProvider>
+	<TodosProvider>
+		<ThemeProvider>
 			<GlobalStyles />
 			<App />
-		</TodosProvider>
-	</ThemeProvider>
+		</ThemeProvider>
+	</TodosProvider>
 );

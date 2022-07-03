@@ -7,7 +7,6 @@ function App() {
 		<Main>
 			<Header />
 			<CreateTodoForm />
-
 			<TodosList />
 		</Main>
 	);
