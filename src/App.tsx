@@ -1,21 +1,14 @@
 import { TodosList, CreateTodoForm } from "./components";
-import { useTheme } from "./hooks/useTheme";
+import { Header } from "./components/Header";
 import { Main } from "./styles/styles";
 
 function App() {
-	const { toggleTheme, theme } = useTheme();
-
 	return (
 		<Main>
-			<h1>Todos List</h1>
-
-			<button onClick={toggleTheme}>
-				{theme === "dark" ? "Change to light theme" : "Change to dark theme"}
-			</button>
+			<Header />
 			<CreateTodoForm />
 
 			<TodosList />
-			<p>Drag and Drop to reorder list</p>
 		</Main>
 	);
 }

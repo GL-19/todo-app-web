@@ -1,5 +1,6 @@
 import { FormEvent, useState } from "react";
 import { useTodos } from "../../hooks/useTodos";
+import { FormContainer, Input, SubmitButton } from "./styles";
 
 function CreateTodoForm() {
 	const { createTodo } = useTodos();
@@ -16,18 +17,19 @@ function CreateTodoForm() {
 	}
 
 	return (
-		<div>
-			<form action="submit" onSubmit={handleCreateTodo}>
-				<input
-					type="text"
-					placeholder="Create a new todo..."
-					value={name}
-					onChange={(e) => setName(e.target.value)}
-				/>
+		<FormContainer action="submit" onSubmit={handleCreateTodo}>
+			<Input
+				type="text"
+				placeholder="Create a new todo..."
+				minLength={3}
+				maxLength={60}
+				pattern="^((?:\s*[A-Za-z]\s*){3, 60})$"
+				value={name}
+				onChange={(e) => setName(e.target.value)}
+			/>
 
-				<button type="submit">Create Todo</button>
-			</form>
-		</div>
+			<SubmitButton type="submit">NEW</SubmitButton>
+		</FormContainer>
 	);
 }
 

@@ -29,7 +29,7 @@ export const lightColors: IColors = {
 	primaryColor: "hsl(235, 19%, 35%)",
 	secondaryColor: "hsl(236, 9%, 61%)",
 	tertiaryColor: "hsl(234, 39%, 85%)",
-	quaternaryColor: "hsl(237, 14%, 26%)",
+	quaternaryColor: "hsl(233, 11%, 84%)",
 	secondaryBackgroundColor: "hsl(0, 0%, 98%)",
-	primaryBackgroundColor: "hsl(236, 33%, 92%)",
+	primaryBackgroundColor: "hsl(235, 40%, 75%)",
 };

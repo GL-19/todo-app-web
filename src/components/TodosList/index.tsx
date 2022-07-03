@@ -4,7 +4,7 @@ import { useIsDesktop } from "../../hooks/useIsDesktop";
 import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
 
 import { BottomMenu, CheckBox, DeleteIcon, FilterMenu } from "./components";
-import { TodoContainer, TodoName, TodosListContainer } from "./styles";
+import { TodoContainer, TodoName, TodosListContainer, Text } from "./styles";
 
 function TodosList() {
 	const { todos, toggleDone, deleteTodo, changeTodoOrder } = useTodos();
@@ -39,8 +39,9 @@ function TodosList() {
 														isActive={todo.done}
 														onClick={() => toggleDone(todo.id)}
 													/>
-													<TodoName isActive={todo.done}>{todo.name}</TodoName>
 												</div>
+
+												<TodoName isActive={todo.done}>{todo.name}</TodoName>
 												<div>
 													<DeleteIcon onClick={() => deleteTodo(todo.id)} />
 												</div>
@@ -57,6 +58,8 @@ function TodosList() {
 			</TodosListContainer>
 
 			{!isDesktop && <FilterMenu />}
+
+			<Text>Drag and Drop to reorder list</Text>
 		</>
 	);
 }

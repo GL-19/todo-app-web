@@ -2,12 +2,12 @@ import { FormEvent, useState } from "react";
 import Modal from "react-modal";
 import { useTodos } from "../../hooks/useTodos";
 
-interface TodoCreationModalProps {
+interface UpdateTodoModalProps {
 	isOpen: boolean;
 	onRequestClose: () => void;
 }
 
-function UpdateTodoModal({ isOpen, onRequestClose: closeModal }: TodoCreationModalProps) {
+function UpdateTodoModal({ isOpen, onRequestClose: closeModal }: UpdateTodoModalProps) {
 	const { createTodo } = useTodos();
 	const [name, setName] = useState("");
 
@@ -40,4 +40,4 @@ function UpdateTodoModal({ isOpen, onRequestClose: closeModal }: TodoCreationMod
 	);
 }
 
-export { UpdateTodoModal as TodoCreationModal };
+export { UpdateTodoModal };

@@ -26,8 +26,11 @@ const BottomMenuContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
 
-	margin-top: 1.25rem;
-	padding: 0 1.25rem;
+	padding: 1.75rem 1.75rem;
+
+	@media screen and (max-width: 850px) {
+		padding: 1.25rem 1.25rem;
+	}
 `;
 
 const ClearDone = styled.p`

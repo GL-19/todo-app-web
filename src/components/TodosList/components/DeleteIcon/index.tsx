@@ -14,4 +14,9 @@ const DeleteIconContainer = styled.img`
 
 	width: 1.33rem;
 	height: 1.33rem;
+
+	&:hover,
+	&:active {
+		opacity: 0.5;
+	}
 `;
