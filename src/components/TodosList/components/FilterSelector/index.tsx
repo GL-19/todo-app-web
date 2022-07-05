@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useTodos } from "../../../../hooks/useTodos";
+import { useTodos } from "../../../../providers/TodosProvider";
 
 export function FilterSelector() {
 	const { todosListOptions, handleChangeTodosListOptions } = useTodos();

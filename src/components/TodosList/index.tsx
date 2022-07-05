@@ -1,4 +1,4 @@
-import { useTodos } from "../../hooks/useTodos";
+import { useTodos } from "../../providers/TodosProvider";
 import { useIsDesktop } from "../../hooks/useIsDesktop";
 
 import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";

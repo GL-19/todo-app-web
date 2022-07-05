@@ -1,16 +1,16 @@
-import { TodoData } from "../TodoData";
+import { Todo } from "../../interfaces/Todo";
 
 type option = "all" | "done" | "incomplete";
 
 interface GetTodosResponse {
-	todos: TodoData[];
+	todos: Todo[];
 }
 
 export async function getTodos(option: option = "all"): Promise<GetTodosResponse> {
 	const stringifiedTodosList = localStorage.getItem("todos");
 
 	if (stringifiedTodosList) {
-		const todos = JSON.parse(stringifiedTodosList) as TodoData[];
+		const todos = JSON.parse(stringifiedTodosList) as Todo[];
 
 		if (option === "done") {
 			const filteredTodos = todos.filter((todo) => todo.done === true);

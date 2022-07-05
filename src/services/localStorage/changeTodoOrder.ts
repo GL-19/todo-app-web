@@ -1,4 +1,4 @@
-import { TodoData } from "../TodoData";
+import { Todo } from "../../interfaces/Todo";
 
 export async function changeTodoOrder(id: string, newOrder: number): Promise<void> {
 	if (newOrder <= 0) {
@@ -9,7 +9,7 @@ export async function changeTodoOrder(id: string, newOrder: number): Promise<voi
 	const stringfiedTodos = localStorage.getItem("todos");
 
 	if (stringfiedTodos) {
-		const todos = JSON.parse(stringfiedTodos) as TodoData[];
+		const todos = JSON.parse(stringfiedTodos) as Todo[];
 
 		if (todos.length <= 1) return;
 
@@ -18,7 +18,7 @@ export async function changeTodoOrder(id: string, newOrder: number): Promise<voi
 			return;
 		}
 
-		const todo = todos.find((todo) => todo.id === id) as TodoData;
+		const todo = todos.find((todo) => todo.id === id) as Todo;
 
 		const oldOrder = todo.order;
 

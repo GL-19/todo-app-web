@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { useTodos } from "../../hooks/useTodos";
+import { useTodos } from "../../providers/TodosProvider";
 import { FormContainer, Input, SubmitButton } from "./styles";
 
 function CreateTodoForm() {
@@ -9,11 +9,13 @@ function CreateTodoForm() {
 	function handleCreateTodo(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 
-		createTodo({
-			name,
-		});
+		if (name) {
+			createTodo({
+				name,
+			});
 
-		setName("");
+			setName("");
+		}
 	}
 
 	return (

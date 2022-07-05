@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useTheme } from "../../hooks/useTheme";
+import { useTheme } from "../../providers/ThemeProvider";
 import sunImg from "../../images/icon-sun.svg";
 import moonImg from "../../images/icon-moon.svg";
 

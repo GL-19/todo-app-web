@@ -1,18 +1,11 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { Todo } from "../interfaces/Todo";
 import { LocalStorage } from "../services/localStorage";
 
 type option = "all" | "done" | "incomplete";
 
 export interface TodoInput {
 	name: string;
-}
-
-export interface Todo {
-	id: string;
-	name: string;
-	order: number;
-	done: boolean;
-	created_at: string;
 }
 
 interface TodosContextData {

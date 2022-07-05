@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useTodos } from "../../../../hooks/useTodos";
+import { useTodos } from "../../../../providers/TodosProvider";
 import { FilterSelector } from "../FilterSelector";
 
 interface BottomMenuProps {

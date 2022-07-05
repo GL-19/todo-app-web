@@ -1,10 +1,10 @@
-import { TodoData } from "../TodoData";
+import { Todo } from "../../interfaces/Todo";
 
 export async function deleteCompletedTodos() {
 	const stringfiedTodos = localStorage.getItem("todos");
 
 	if (stringfiedTodos) {
-		const todos = JSON.parse(stringfiedTodos) as TodoData[];
+		const todos = JSON.parse(stringfiedTodos) as Todo[];
 
 		const updatedTodos = todos
 			.filter((todo) => !todo.done)

@@ -1,4 +1,4 @@
-import { TodoData } from "../TodoData";
+import { Todo } from "../../interfaces/Todo";
 import { v4 as uuid } from "uuid";
 
 interface CreateTodoForm {
@@ -9,9 +9,9 @@ export async function createTodo(data: CreateTodoForm) {
 	const stringifiedTodos = localStorage.getItem("todos");
 
 	if (stringifiedTodos) {
-		const todos = JSON.parse(stringifiedTodos) as TodoData[];
+		const todos = JSON.parse(stringifiedTodos) as Todo[];
 
-		const newTodo: TodoData = {
+		const newTodo: Todo = {
 			id: uuid(),
 			done: false,
 			order: todos.length + 1,
@@ -23,7 +23,7 @@ export async function createTodo(data: CreateTodoForm) {
 
 		localStorage.setItem("todos", JSON.stringify(updatedTodosList));
 	} else {
-		const newTodo: TodoData = {
+		const newTodo: Todo = {
 			id: uuid(),
 			done: false,
 			order: 1,

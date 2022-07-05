@@ -1,4 +1,4 @@
-import { TodoData } from "../TodoData";
+import { Todo } from "../../interfaces/Todo";
 
 interface GetTodosListInfoResponse {
 	total: number;
@@ -10,7 +10,7 @@ export async function getTodosListInfo(): Promise<GetTodosListInfoResponse> {
 	const stringifiedTodosList = localStorage.getItem("todos");
 
 	if (stringifiedTodosList) {
-		const todos = JSON.parse(stringifiedTodosList) as TodoData[];
+		const todos = JSON.parse(stringifiedTodosList) as Todo[];
 
 		const total = todos.length;
 
