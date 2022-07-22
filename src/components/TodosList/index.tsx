@@ -36,12 +36,12 @@ function TodosList() {
 											>
 												<div>
 													<CheckBox
-														isActive={todo.done}
+														isActive={todo.isDone}
 														onClick={() => toggleDone(todo.id)}
 													/>
 												</div>
 
-												<TodoName isActive={todo.done}>{todo.name}</TodoName>
+												<TodoName isActive={todo.isDone}>{todo.name}</TodoName>
 												<div>
 													<DeleteIcon onClick={() => deleteTodo(todo.id)} />
 												</div>

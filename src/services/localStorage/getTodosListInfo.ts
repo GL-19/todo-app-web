@@ -15,7 +15,7 @@ export async function getTodosListInfo(): Promise<GetTodosListInfoResponse> {
 		const total = todos.length;
 
 		const incomplete = todos.reduce((count, todo) => {
-			if (!todo.done) count++;
+			if (!todo.isDone) count++;
 			return count;
 		}, 0);
 
