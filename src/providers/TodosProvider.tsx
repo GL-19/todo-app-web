@@ -13,11 +13,11 @@ interface TodosContextData {
 	incompleted: number;
 	total: number;
 	todosListOptions: option;
-	createTodo: (data: TodoInput) => Promise<void>;
-	deleteTodo: (id: string) => Promise<void>;
-	deleteCompletedTodos: () => Promise<void>;
-	toggleDone: (id: string) => Promise<void>;
-	changeTodoOrder: (id: string, newOrder: number) => void;
+	handleCreateTodo: (data: TodoInput) => Promise<void>;
+	handleDeleteTodo: (id: string) => Promise<void>;
+	handleDeleteCompletedTodos: () => Promise<void>;
+	handleToggleDone: (id: string) => Promise<void>;
+	handleChangeTodoOrder: (id: string, newOrder: number) => void;
 	handleChangeTodosListOptions: (option: option) => void;
 }
 
@@ -35,7 +35,6 @@ export const TodosProvider: React.FC = ({ children }) => {
 
 		/* const { incompleted, total } = await LocalStorage.getTodosListInfo(); */
 
-		console.log("getTodosData got called!");
 		setTodos(todos);
 		/* setTotal(total);
 		setIncompleted(incompleted); */
@@ -45,25 +44,25 @@ export const TodosProvider: React.FC = ({ children }) => {
 		getTodosData(todosListOptions);
 	}, [getTodosData, todosListOptions]);
 
-	async function createTodo(data: TodoInput): Promise<void> {
+	async function handleCreateTodo(data: TodoInput): Promise<void> {
 		await Api.createTodo(data);
 
 		await getTodosData(todosListOptions);
 	}
 
-	async function toggleDone(id: string): Promise<void> {
+	async function handleToggleDone(id: string): Promise<void> {
 		await Api.toggleTodoDone(id);
 
 		await getTodosData(todosListOptions);
 	}
 
-	async function deleteTodo(id: string): Promise<void> {
+	async function handleDeleteTodo(id: string): Promise<void> {
 		await Api.deleteTodo(id);
 
 		await getTodosData(todosListOptions);
 	}
 
-	async function deleteCompletedTodos(): Promise<void> {
+	async function handleDeleteCompletedTodos(): Promise<void> {
 		await Api.deleteCompletedTodos();
 
 		await getTodosData(todosListOptions);
@@ -78,7 +77,7 @@ export const TodosProvider: React.FC = ({ children }) => {
 		setTodos(todos);
 	}
 
-	async function changeTodoOrder(id: string, newOrder: number) {
+	async function handleChangeTodoOrder(id: string, newOrder: number) {
 		await Api.changeTodoOrder(id, newOrder);
 
 		await getTodosData(todosListOptions);
@@ -91,12 +90,12 @@ export const TodosProvider: React.FC = ({ children }) => {
 				total,
 				incompleted,
 				todosListOptions,
-				createTodo,
-				deleteTodo,
-				deleteCompletedTodos,
-				toggleDone,
+				handleCreateTodo,
+				handleDeleteTodo,
+				handleDeleteCompletedTodos,
+				handleToggleDone,
 				handleChangeTodosListOptions,
-				changeTodoOrder,
+				handleChangeTodoOrder,
 			}}
 		>
 			{children}

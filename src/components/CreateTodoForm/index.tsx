@@ -3,7 +3,7 @@ import { useTodos } from "../../providers/TodosProvider";
 import { FormContainer, Input, SubmitButton } from "./styles";
 
 function CreateTodoForm() {
-	const { createTodo } = useTodos();
+	const { handleCreateTodo: createTodo } = useTodos();
 	const [name, setName] = useState("");
 
 	function handleCreateTodo(event: FormEvent<HTMLFormElement>) {

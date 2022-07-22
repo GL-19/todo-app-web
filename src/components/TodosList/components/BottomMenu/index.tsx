@@ -7,7 +7,7 @@ interface BottomMenuProps {
 }
 
 function BottomMenu({ isDesktop }: BottomMenuProps) {
-	const { incompleted, deleteCompletedTodos } = useTodos();
+	const { incompleted, handleDeleteCompletedTodos: deleteCompletedTodos } = useTodos();
 
 	return (
 		<BottomMenuContainer>

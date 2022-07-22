@@ -7,7 +7,12 @@ import { BottomMenu, CheckBox, DeleteIcon, FilterMenu } from "./components";
 import { TodoContainer, TodoName, TodosListContainer, Text } from "./styles";
 
 function TodosList() {
-	const { todos, toggleDone, deleteTodo, changeTodoOrder } = useTodos();
+	const {
+		todos,
+		handleToggleDone: toggleDone,
+		handleDeleteTodo: deleteTodo,
+		handleChangeTodoOrder: changeTodoOrder,
+	} = useTodos();
 	const isDesktop = useMediaQuery();
 
 	function handleOnDragEnd(result: DropResult): void {
