@@ -7,12 +7,7 @@ import { BottomMenu, CheckBox, DeleteIcon, FilterMenu } from "./components";
 import { TodoContainer, TodoName, TodosListContainer, Text } from "./styles";
 
 function TodosList() {
-	const {
-		todos,
-		handleToggleDone: toggleDone,
-		handleDeleteTodo: deleteTodo,
-		handleChangeTodoOrder: changeTodoOrder,
-	} = useTodos();
+	const { todos, handleToggleDone, handleDeleteTodo, handleChangeTodoOrder } = useTodos();
 	const isDesktop = useMediaQuery();
 
 	function handleOnDragEnd(result: DropResult): void {
@@ -21,7 +16,7 @@ function TodosList() {
 		const id = result.draggableId;
 		const newOrder = todos[result.destination.index].order;
 
-		changeTodoOrder(id, newOrder);
+		handleChangeTodoOrder(id, newOrder);
 	}
 
 	return (
@@ -42,13 +37,13 @@ function TodosList() {
 												<div>
 													<CheckBox
 														isActive={todo.isDone}
-														onClick={() => toggleDone(todo.id)}
+														onClick={() => handleToggleDone(todo.id)}
 													/>
 												</div>
 
 												<TodoName isActive={todo.isDone}>{todo.name}</TodoName>
 												<div>
-													<DeleteIcon onClick={() => deleteTodo(todo.id)} />
+													<DeleteIcon onClick={() => handleDeleteTodo(todo.id)} />
 												</div>
 											</TodoContainer>
 										)}

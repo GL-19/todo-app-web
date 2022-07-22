@@ -7,7 +7,7 @@ interface BottomMenuProps {
 }
 
 function BottomMenu({ isDesktop }: BottomMenuProps) {
-	const { incompleted, handleDeleteCompletedTodos: deleteCompletedTodos } = useTodos();
+	const { incompleted, handleDeleteCompletedTodos } = useTodos();
 
 	return (
 		<BottomMenuContainer>
@@ -15,7 +15,7 @@ function BottomMenu({ isDesktop }: BottomMenuProps) {
 
 			{isDesktop && <FilterSelector />}
 
-			<ClearDone onClick={deleteCompletedTodos}>Clear Completed</ClearDone>
+			<ClearDone onClick={handleDeleteCompletedTodos}>Clear Completed</ClearDone>
 		</BottomMenuContainer>
 	);
 }

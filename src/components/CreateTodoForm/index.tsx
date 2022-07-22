@@ -3,14 +3,14 @@ import { useTodos } from "../../providers/TodosProvider";
 import { FormContainer, Input, SubmitButton } from "./styles";
 
 function CreateTodoForm() {
-	const { handleCreateTodo: createTodo } = useTodos();
+	const { handleCreateTodo } = useTodos();
 	const [name, setName] = useState("");
 
-	function handleCreateTodo(event: FormEvent<HTMLFormElement>) {
+	function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 
 		if (name) {
-			createTodo({
+			handleCreateTodo({
 				name,
 			});
 
@@ -19,7 +19,7 @@ function CreateTodoForm() {
 	}
 
 	return (
-		<FormContainer action="submit" onSubmit={handleCreateTodo}>
+		<FormContainer action="submit" onSubmit={handleSubmit}>
 			<Input
 				type="text"
 				placeholder="Create a new todo..."
