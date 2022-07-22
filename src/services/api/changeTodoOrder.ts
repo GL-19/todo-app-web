@@ -5,10 +5,10 @@ export function changeTodoOrder(
 	todoId: string,
 	newOrder: number
 ): Promise<AxiosResponse> {
-	return api.post("/todos", {
-		body: {
-			id: todoId,
-			newOrder,
-		},
+	console.log(todoId, newOrder);
+
+	return api.post("/todos/change-order", {
+		id: todoId,
+		newOrder,
 	});
 }

@@ -6,8 +6,6 @@ interface CreateTodoForm {
 }
 
 export function createTodo(data: CreateTodoForm): Promise<AxiosResponse> {
-	console.log(data, data.name);
-
 	return api.post("/todos", {
 		name: data.name,
 	});
