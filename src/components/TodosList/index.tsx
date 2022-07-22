@@ -1,5 +1,5 @@
 import { useTodos } from "../../providers/TodosProvider";
-import { useIsDesktop } from "../../hooks/useIsDesktop";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
 
@@ -8,7 +8,7 @@ import { TodoContainer, TodoName, TodosListContainer, Text } from "./styles";
 
 function TodosList() {
 	const { todos, toggleDone, deleteTodo, changeTodoOrder } = useTodos();
-	const isDesktop = useIsDesktop();
+	const isDesktop = useMediaQuery();
 
 	function handleOnDragEnd(result: DropResult): void {
 		if (!result.destination) return;

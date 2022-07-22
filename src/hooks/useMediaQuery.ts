@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 
-export function useIsDesktop(widthThreshold: number = 850): boolean {
-	const [isDesktop, setIsDesktop] = useState(true);
+export function useMediaQuery(widthThreshold: number = 850): boolean {
+	const [isBiggerThanThreshold, setBiggerThanThreshold] = useState(true);
 
 	useEffect(() => {
 		const updateMedia = () => {
 			if (window.innerWidth > widthThreshold) {
-				setIsDesktop(true);
+				setBiggerThanThreshold(true);
 			} else {
-				setIsDesktop(false);
+				setBiggerThanThreshold(false);
 			}
 		};
 
@@ -19,5 +19,5 @@ export function useIsDesktop(widthThreshold: number = 850): boolean {
 		return () => window.removeEventListener("resize", updateMedia);
 	}, [widthThreshold]);
 
-	return isDesktop;
+	return isBiggerThanThreshold;
 }
