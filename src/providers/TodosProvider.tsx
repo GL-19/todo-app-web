@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { Todo } from "../interfaces/Todo";
-import { getTodos, toggleTodoDone } from "../services/api";
+import { Api } from "../services/api";
 
 type option = "all" | "completed" | "incompleted";
 
@@ -30,7 +30,7 @@ export const TodosProvider: React.FC = ({ children }) => {
 	const [todosListOptions, setTodosListOptions] = useState<option>("all");
 
 	const getTodosData = useCallback(async (option: option): Promise<void> => {
-		const response = await getTodos(option);
+		const response = await Api.getTodos(option);
 		const { todos } = response.data;
 
 		/* const { incompleted, total } = await LocalStorage.getTodosListInfo(); */
@@ -46,31 +46,25 @@ export const TodosProvider: React.FC = ({ children }) => {
 	}, [getTodosData, todosListOptions]);
 
 	async function createTodo(data: TodoInput): Promise<void> {
-		await createTodo(data);
+		await Api.createTodo(data);
 
 		await getTodosData(todosListOptions);
 	}
 
 	async function toggleDone(id: string): Promise<void> {
-		await toggleTodoDone(id);
-
-		console.log("toggle todo got called!");
+		await Api.toggleTodoDone(id);
 
 		await getTodosData(todosListOptions);
 	}
 
 	async function deleteTodo(id: string): Promise<void> {
-		await deleteTodo(id);
-
-		console.log("delete todo got called!");
+		await Api.deleteTodo(id);
 
 		await getTodosData(todosListOptions);
 	}
 
 	async function deleteCompletedTodos(): Promise<void> {
-		await deleteCompletedTodos();
-
-		console.log("delete completed todos got called!");
+		await Api.deleteCompletedTodos();
 
 		await getTodosData(todosListOptions);
 	}
@@ -78,14 +72,14 @@ export const TodosProvider: React.FC = ({ children }) => {
 	async function handleChangeTodosListOptions(option: option) {
 		setTodosListOptions(option);
 
-		const response = await getTodos(option);
+		const response = await Api.getTodos(option);
 		const { todos } = response.data;
 
 		setTodos(todos);
 	}
 
 	async function changeTodoOrder(id: string, newOrder: number) {
-		await changeTodoOrder(id, newOrder);
+		await Api.changeTodoOrder(id, newOrder);
 
 		await getTodosData(todosListOptions);
 	}

@@ -15,3 +15,5 @@ export {
 	getTodos,
 	toggleTodoDone,
 };
+
+export * as Api from ".";
