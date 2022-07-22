@@ -30,14 +30,15 @@ export const TodosProvider: React.FC = ({ children }) => {
 	const [todosListOptions, setTodosListOptions] = useState<option>("all");
 
 	const getTodosData = useCallback(async (option: option): Promise<void> => {
-		const response = await Api.getTodos(option);
-		const { todos } = response.data;
+		const getTodosResponse = await Api.getTodos(option);
+		const { todos } = getTodosResponse.data;
 
-		/* const { incompleted, total } = await LocalStorage.getTodosListInfo(); */
+		const getTodosListInfoResponse = await Api.getTodosListInfo();
+		const { incompleted, total } = getTodosListInfoResponse.data;
 
 		setTodos(todos);
-		/* setTotal(total);
-		setIncompleted(incompleted); */
+		setTotal(total);
+		setIncompleted(incompleted);
 	}, []);
 
 	useEffect(() => {

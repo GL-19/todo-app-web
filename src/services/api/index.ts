@@ -4,6 +4,7 @@ import { createTodo } from "./createTodo";
 import { deleteTodo } from "./deleteTodo";
 import { deleteCompletedTodos } from "./deleteCompletedTodos";
 import { getTodos } from "./getTodos";
+import { getTodosListInfo } from "./getTodosListInfo";
 import { toggleTodoDone } from "./toggleTodoDone";
 
 export {
@@ -13,6 +14,7 @@ export {
 	deleteTodo,
 	deleteCompletedTodos,
 	getTodos,
+	getTodosListInfo,
 	toggleTodoDone,
 };
 
