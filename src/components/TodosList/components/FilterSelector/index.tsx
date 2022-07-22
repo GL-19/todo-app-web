@@ -14,15 +14,15 @@ export function FilterSelector() {
 			</FilterOption>
 
 			<FilterOption
-				onClick={() => handleChangeTodosListOptions("incomplete")}
-				isActive={todosListOptions === "incomplete"}
+				onClick={() => handleChangeTodosListOptions("incompleted")}
+				isActive={todosListOptions === "incompleted"}
 			>
 				Active
 			</FilterOption>
 
 			<FilterOption
-				onClick={() => handleChangeTodosListOptions("done")}
-				isActive={todosListOptions === "done"}
+				onClick={() => handleChangeTodosListOptions("completed")}
+				isActive={todosListOptions === "completed"}
 			>
 				Completed
 			</FilterOption>

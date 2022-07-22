@@ -1,8 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { Todo } from "../interfaces/Todo";
-import { LocalStorage } from "../services/localStorage";
+import { getTodos, toggleTodoDone } from "../services/api";
 
-type option = "all" | "done" | "incomplete";
+type option = "all" | "completed" | "incompleted";
 
 export interface TodoInput {
 	name: string;
@@ -10,7 +10,7 @@ export interface TodoInput {
 
 interface TodosContextData {
 	todos: Todo[];
-	incomplete: number;
+	incompleted: number;
 	total: number;
 	todosListOptions: option;
 	createTodo: (data: TodoInput) => Promise<void>;
@@ -25,43 +25,52 @@ export const TodosContext = createContext<TodosContextData>({} as TodosContextDa
 
 export const TodosProvider: React.FC = ({ children }) => {
 	const [todos, setTodos] = useState<Todo[]>([]);
-	const [incomplete, setIncomplete] = useState(0);
+	const [incompleted, setIncompleted] = useState(0);
 	const [total, setTotal] = useState(0);
 	const [todosListOptions, setTodosListOptions] = useState<option>("all");
 
-	const getTodosData = useCallback(async (option: option = "all"): Promise<void> => {
-		const { todos } = await LocalStorage.getTodos(option);
-		const { incomplete, total } = await LocalStorage.getTodosListInfo();
+	const getTodosData = useCallback(async (option: option): Promise<void> => {
+		const response = await getTodos(option);
+		const { todos } = response.data;
 
+		/* const { incompleted, total } = await LocalStorage.getTodosListInfo(); */
+
+		console.log("getTodosData got called!");
 		setTodos(todos);
-		setTotal(total);
-		setIncomplete(incomplete);
+		/* setTotal(total);
+		setIncompleted(incompleted); */
 	}, []);
 
 	useEffect(() => {
-		getTodosData();
-	}, [getTodosData]);
+		getTodosData(todosListOptions);
+	}, [getTodosData, todosListOptions]);
 
 	async function createTodo(data: TodoInput): Promise<void> {
-		await LocalStorage.createTodo(data);
+		await createTodo(data);
 
 		await getTodosData(todosListOptions);
 	}
 
 	async function toggleDone(id: string): Promise<void> {
-		await LocalStorage.toggleTodoDone(id);
+		await toggleTodoDone(id);
+
+		console.log("toggle todo got called!");
 
 		await getTodosData(todosListOptions);
 	}
 
 	async function deleteTodo(id: string): Promise<void> {
-		await LocalStorage.deleteTodo(id);
+		await deleteTodo(id);
+
+		console.log("delete todo got called!");
 
 		await getTodosData(todosListOptions);
 	}
 
 	async function deleteCompletedTodos(): Promise<void> {
-		await LocalStorage.deleteCompletedTodos();
+		await deleteCompletedTodos();
+
+		console.log("delete completed todos got called!");
 
 		await getTodosData(todosListOptions);
 	}
@@ -69,13 +78,14 @@ export const TodosProvider: React.FC = ({ children }) => {
 	async function handleChangeTodosListOptions(option: option) {
 		setTodosListOptions(option);
 
-		const { todos } = await LocalStorage.getTodos(option);
+		const response = await getTodos(option);
+		const { todos } = response.data;
 
 		setTodos(todos);
 	}
 
 	async function changeTodoOrder(id: string, newOrder: number) {
-		await LocalStorage.changeTodoOrder(id, newOrder);
+		await changeTodoOrder(id, newOrder);
 
 		await getTodosData(todosListOptions);
 	}
@@ -85,7 +95,7 @@ export const TodosProvider: React.FC = ({ children }) => {
 			value={{
 				todos,
 				total,
-				incomplete,
+				incompleted,
 				todosListOptions,
 				createTodo,
 				deleteTodo,

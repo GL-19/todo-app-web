@@ -7,11 +7,11 @@ interface BottomMenuProps {
 }
 
 function BottomMenu({ isDesktop }: BottomMenuProps) {
-	const { incomplete, deleteCompletedTodos } = useTodos();
+	const { incompleted, deleteCompletedTodos } = useTodos();
 
 	return (
 		<BottomMenuContainer>
-			<Text>{incomplete} items left</Text>
+			<Text>{incompleted} items left</Text>
 
 			{isDesktop && <FilterSelector />}
 
