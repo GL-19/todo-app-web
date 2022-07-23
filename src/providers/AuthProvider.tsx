@@ -10,6 +10,7 @@ interface AuthContextData {
 		email: string;
 	};
 	handleLogin: (name: string, email: string) => Promise<void>;
+	handleLogout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -45,6 +46,16 @@ export const AuthProvider: React.FC = ({ children }) => {
 		}
 	}
 
+	async function handleLogout() {
+		try {
+			localStorage.removeItem("token");
+			localStorage.removeItem("user");
+			setAuthenticated(false);
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
 	return (
 		<AuthContext.Provider
 			value={{
@@ -52,6 +63,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 				isAuthenticated,
 				user,
 				handleLogin,
+				handleLogout,
 			}}
 		>
 			{children}

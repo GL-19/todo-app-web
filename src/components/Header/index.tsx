@@ -2,13 +2,17 @@ import styled from "styled-components";
 import { useTheme } from "../../providers/ThemeProvider";
 import sunImg from "../../images/icon-sun.svg";
 import moonImg from "../../images/icon-moon.svg";
+import { useAuth } from "../../providers/AuthProvider";
 
 export function Header() {
 	const { toggleTheme, theme } = useTheme();
+	const { isAuthenticated, handleLogout } = useAuth();
 
 	return (
 		<HeaderContainer>
 			<Title>TODO</Title>
+
+			{isAuthenticated && <button onClick={handleLogout}>Logout</button>}
 
 			{theme === "dark" ? (
 				<ThemeButton onClick={toggleTheme}>
