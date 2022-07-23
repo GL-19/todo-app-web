@@ -4,11 +4,13 @@ import { api } from "../services/api";
 interface AuthContextData {
 	token: string;
 	isAuthenticated: boolean;
-	user: {
-		id: string;
-		name: string;
-		email: string;
-	};
+	user:
+		| {
+				id: string;
+				name: string;
+				email: string;
+		  }
+		| {};
 	handleLogin: (name: string, email: string) => Promise<void>;
 	handleLogout: () => Promise<void>;
 }
@@ -17,7 +19,7 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC = ({ children }) => {
 	const [token, setToken] = useState("");
-	const [user, setUser] = useState({ id: "", name: "", email: "" });
+	const [user, setUser] = useState({});
 	const [isAuthenticated, setAuthenticated] = useState(false);
 
 	useEffect(() => {
@@ -37,7 +39,10 @@ export const AuthProvider: React.FC = ({ children }) => {
 
 			const token = response.data.token;
 			const user = response.data.user;
+
 			setAuthenticated(true);
+			setToken(token);
+			setUser(user);
 
 			localStorage.setItem("token", token);
 			localStorage.setItem("user", JSON.stringify(user));
@@ -52,6 +57,8 @@ export const AuthProvider: React.FC = ({ children }) => {
 			localStorage.removeItem("token");
 			localStorage.removeItem("user");
 			setAuthenticated(false);
+			setToken("");
+			setUser({});
 		} catch (error) {
 			console.log(error);
 		}
