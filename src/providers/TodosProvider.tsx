@@ -25,7 +25,7 @@ interface TodosContextData {
 export const TodosContext = createContext<TodosContextData>({} as TodosContextData);
 
 export const TodosProvider: React.FC = ({ children }) => {
-	const { token } = useAuth();
+	const { token, isAuthenticated } = useAuth();
 
 	const [todos, setTodos] = useState<Todo[]>([]);
 	const [incompleted, setIncompleted] = useState(0);
@@ -53,7 +53,7 @@ export const TodosProvider: React.FC = ({ children }) => {
 			api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 			getTodosData(todosListOptions);
 		}
-	}, [getTodosData, todosListOptions, token]);
+	}, [getTodosData, todosListOptions, token, isAuthenticated]);
 
 	async function handleCreateTodo(data: TodoInput): Promise<void> {
 		await api.post("/todos", {

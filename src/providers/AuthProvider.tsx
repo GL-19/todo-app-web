@@ -31,9 +31,9 @@ export const AuthProvider: React.FC = ({ children }) => {
 		}
 	}, []);
 
-	async function handleLogin(name: string, email: string) {
+	async function handleLogin(email: string, password: string) {
 		try {
-			const response = await api.post("/users/sessions", { name, email });
+			const response = await api.post("/users/sessions", { email, password });
 
 			const token = response.data.token;
 			const user = response.data.user;
@@ -42,7 +42,8 @@ export const AuthProvider: React.FC = ({ children }) => {
 			localStorage.setItem("token", token);
 			localStorage.setItem("user", JSON.stringify(user));
 		} catch (error) {
-			console.log(error);
+			console.log("login failed!");
+			throw new Error("login failed!");
 		}
 	}
 
