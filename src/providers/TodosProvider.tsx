@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { Todo } from "../interfaces/Todo";
-import { Api } from "../services/api";
+import { api } from "../services/api";
 
 type option = "all" | "completed" | "incompleted";
 
@@ -30,10 +30,14 @@ export const TodosProvider: React.FC = ({ children }) => {
 	const [todosListOptions, setTodosListOptions] = useState<option>("all");
 
 	const getTodosData = useCallback(async (option: option): Promise<void> => {
-		const getTodosResponse = await Api.getTodos(option);
+		const getTodosResponse = await api.get("/todos", {
+			params: {
+				filterOption: option,
+			},
+		});
 		const { todos } = getTodosResponse.data;
 
-		const getTodosListInfoResponse = await Api.getTodosListInfo();
+		const getTodosListInfoResponse = await api.get("/todos/info/count");
 		const { incompleted, total } = getTodosListInfoResponse.data;
 
 		setTodos(todos);
@@ -46,25 +50,31 @@ export const TodosProvider: React.FC = ({ children }) => {
 	}, [getTodosData, todosListOptions]);
 
 	async function handleCreateTodo(data: TodoInput): Promise<void> {
-		await Api.createTodo(data);
+		await api.post("/todos", {
+			name: data.name,
+		});
 
 		await getTodosData(todosListOptions);
 	}
 
 	async function handleToggleDone(id: string): Promise<void> {
-		await Api.toggleTodoDone(id);
+		await api.patch(`/todos/${id}`);
 
 		await getTodosData(todosListOptions);
 	}
 
 	async function handleDeleteTodo(id: string): Promise<void> {
-		await Api.deleteTodo(id);
+		await api.delete(`/todos/${id}`);
 
 		await getTodosData(todosListOptions);
 	}
 
 	async function handleDeleteCompletedTodos(): Promise<void> {
-		await Api.deleteCompletedTodos();
+		await api.delete("/todos", {
+			params: {
+				option: "completed",
+			},
+		});
 
 		await getTodosData(todosListOptions);
 	}
@@ -72,14 +82,21 @@ export const TodosProvider: React.FC = ({ children }) => {
 	async function handleChangeTodosListOptions(option: option) {
 		setTodosListOptions(option);
 
-		const response = await Api.getTodos(option);
+		const response = await api.get("/todos", {
+			params: {
+				filterOption: option,
+			},
+		});
 		const { todos } = response.data;
 
 		setTodos(todos);
 	}
 
 	async function handleChangeTodoOrder(id: string, newOrder: number) {
-		await Api.changeTodoOrder(id, newOrder);
+		await api.post("/todos/change-order", {
+			id,
+			newOrder,
+		});
 
 		await getTodosData(todosListOptions);
 	}
