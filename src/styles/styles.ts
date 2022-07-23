@@ -14,6 +14,7 @@ export const Main = styled.main`
 	@media screen and (max-width: 850px) {
 		padding: 2rem;
 	}
+
 	@media screen and (max-width: 850px) {
 		padding: 2rem 1rem;
 	}
