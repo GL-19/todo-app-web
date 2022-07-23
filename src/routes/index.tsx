@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HomePage, ListPage, SignupPage } from "../pages";
 import { useAuth } from "../providers/AuthProvider";
 import { ProtectedRoute } from "./ProtectedRoute";
@@ -11,30 +11,15 @@ export function Router() {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route
-					path="/"
-					element={
-						<PublicRoute isAuthenticated={isAuthenticated}>
-							<HomePage />
-						</PublicRoute>
-					}
-				/>
-				<Route
-					path="/sign-up"
-					element={
-						<PublicRoute isAuthenticated={isAuthenticated}>
-							<SignupPage />
-						</PublicRoute>
-					}
-				/>
-				<Route
-					path="/todo-list"
-					element={
-						<ProtectedRoute isAuthenticated={isAuthenticated}>
-							<ListPage />
-						</ProtectedRoute>
-					}
-				/>
+				<Route element={<PublicRoute isAuthenticated={isAuthenticated} />}>
+					<Route path="/" element={<HomePage />} />
+					<Route path="/signup" element={<SignupPage />} />
+				</Route>
+
+				<Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
+					<Route path="/todo-list" element={<ListPage />} />
+				</Route>
+
 				<Route path="*" element={<p>Page not found: 404!</p>} />
 			</Routes>
 		</BrowserRouter>
