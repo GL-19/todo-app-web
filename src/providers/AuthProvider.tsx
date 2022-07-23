@@ -1,13 +1,23 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { api } from "../services/api";
 
-interface AuthContextData {}
+interface AuthContextData {
+	token: string;
+	isAuthenticated: boolean;
+	user: {
+		id: string;
+		name: string;
+		email: string;
+	};
+	handleLogin: (name: string, email: string) => Promise<void>;
+}
 
-const AuthContext = createContext<AuthContextData>({});
+const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC = ({ children }) => {
 	const [token, setToken] = useState("");
-	const [user, setUser] = useState({});
-	const [isSignedIn, setSignedIn] = useState(false);
+	const [user, setUser] = useState({ id: "", name: "", email: "" });
+	const [isAuthenticated, setAuthenticated] = useState(false);
 
 	useEffect(() => {
 		const token = localStorage.getItem("token");
@@ -16,9 +26,39 @@ export const AuthProvider: React.FC = ({ children }) => {
 		if (token && stringfiedUser) {
 			setToken(token);
 			setUser(JSON.parse(stringfiedUser));
-			setSignedIn(true);
+			setAuthenticated(true);
 		}
 	}, []);
 
-	return <AuthContext.Provider value={{}}>{children}</AuthContext.Provider>;
+	async function handleLogin(name: string, email: string) {
+		try {
+			const response = await api.post("/users/sessions", { name, email });
+
+			const token = response.data.token;
+			const user = response.data.user;
+			setAuthenticated(true);
+
+			localStorage.setItem("token", token);
+			localStorage.setItem("user", JSON.stringify(user));
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	return (
+		<AuthContext.Provider
+			value={{
+				token,
+				isAuthenticated,
+				user,
+				handleLogin,
+			}}
+		>
+			{children}
+		</AuthContext.Provider>
+	);
 };
+
+export function useAuth() {
+	return useContext(AuthContext);
+}

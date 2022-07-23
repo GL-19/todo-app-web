@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { Todo } from "../interfaces/Todo";
 import { api } from "../services/api";
+import { useAuth } from "./AuthProvider";
 
 type option = "all" | "completed" | "incompleted";
 
@@ -24,6 +25,8 @@ interface TodosContextData {
 export const TodosContext = createContext<TodosContextData>({} as TodosContextData);
 
 export const TodosProvider: React.FC = ({ children }) => {
+	const { token } = useAuth();
+
 	const [todos, setTodos] = useState<Todo[]>([]);
 	const [incompleted, setIncompleted] = useState(0);
 	const [total, setTotal] = useState(0);
@@ -46,8 +49,11 @@ export const TodosProvider: React.FC = ({ children }) => {
 	}, []);
 
 	useEffect(() => {
-		getTodosData(todosListOptions);
-	}, [getTodosData, todosListOptions]);
+		if (token) {
+			api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+			getTodosData(todosListOptions);
+		}
+	}, [getTodosData, todosListOptions, token]);
 
 	async function handleCreateTodo(data: TodoInput): Promise<void> {
 		await api.post("/todos", {
