@@ -22,7 +22,7 @@ export const Input = styled.input`
 	border: none;
 
 	&:focus {
-		outline: none;
+		outline: ${({ theme }) => theme.colors.purple};
 	}
 `;
 

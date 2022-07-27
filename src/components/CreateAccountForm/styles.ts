@@ -32,10 +32,6 @@ export const Input = styled.input`
 	background-color: ${({ theme }) => theme.colors.quaternaryColor};
 	border: none;
 	border-radius: 5px;
-
-	&:focus {
-		outline: none;
-	}
 `;
 
 export const SubmitButton = styled.button`

@@ -22,6 +22,7 @@ export function LoginForm() {
 
 	return (
 		<FormContainer onSubmit={handleSubmit}>
+			<h2>Login</h2>
 			<Input
 				id="email"
 				placeholder="E-mail"
