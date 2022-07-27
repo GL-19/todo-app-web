@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { ICreateUserDTO } from "../interfaces/DTO/ICreateUserDTO";
 import { api } from "../services/api";
 
 interface AuthContextData {
@@ -13,6 +14,7 @@ interface AuthContextData {
 		| {};
 	handleLogin: (name: string, email: string) => Promise<void>;
 	handleLogout: () => Promise<void>;
+	handleSignup: (data: ICreateUserDTO) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -64,6 +66,16 @@ export const AuthProvider: React.FC = ({ children }) => {
 		}
 	}
 
+	async function handleSignup(data: ICreateUserDTO) {
+		try {
+			await api.post("/users", {
+				...data,
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
 	return (
 		<AuthContext.Provider
 			value={{
@@ -72,6 +84,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 				user,
 				handleLogin,
 				handleLogout,
+				handleSignup,
 			}}
 		>
 			{children}

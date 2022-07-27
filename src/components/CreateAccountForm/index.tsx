@@ -1,23 +1,35 @@
 import { FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../providers/AuthProvider";
 import { FormContainer, Input, SubmitButton } from "./styles";
 
 export function CreateAccountForm() {
-	const { handleLogin } = useAuth();
+	const { handleSignup } = useAuth();
+	const navigate = useNavigate();
 
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [repeatPassword, setRepeatPassword] = useState("");
+
 	const [error, setError] = useState(false);
 
 	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+		if (password !== repeatPassword) {
+			setError(true);
+			return;
+		}
+
 		try {
 			event.preventDefault();
 
 			setError(false);
 
-			await handleLogin(email, password);
+			console.log(name, email, password);
+
+			await handleSignup({ name, email, password });
+
+			navigate("/");
 		} catch {
 			setError(true);
 		}
@@ -30,7 +42,7 @@ export function CreateAccountForm() {
 			<Input
 				placeholder="Name"
 				type="text"
-				value={email}
+				value={name}
 				onChange={(event) => setName(event.target.value)}
 			/>
 
@@ -51,11 +63,11 @@ export function CreateAccountForm() {
 			<Input
 				placeholder="Repeat Password"
 				type="password"
-				value={password}
+				value={repeatPassword}
 				onChange={(event) => setRepeatPassword(event.target.value)}
 			/>
 
-			{error && <p>Email or Password incorrect!</p>}
+			{error && <p>Password must match!</p>}
 			<SubmitButton type="submit">Register</SubmitButton>
 		</FormContainer>
 	);
