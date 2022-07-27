@@ -25,7 +25,6 @@ function CreateTodoForm() {
 				placeholder="Create a new todo..."
 				minLength={3}
 				maxLength={60}
-				/* pattern="^((?:\s*[A-Za-z]\s*){3, 60})$" */
 				value={name}
 				onChange={(e) => setName(e.target.value)}
 			/>

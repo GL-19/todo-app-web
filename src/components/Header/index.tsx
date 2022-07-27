@@ -42,6 +42,7 @@ const HeaderContainer = styled.header`
 
 	width: 100%;
 	max-width: 45rem;
+	margin: 0 auto;
 `;
 
 const ThemeButton = styled.button`
