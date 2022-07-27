@@ -3,6 +3,7 @@ import { useTheme } from "../../providers/ThemeProvider";
 import sunImg from "../../images/icon-sun.svg";
 import moonImg from "../../images/icon-moon.svg";
 import { useAuth } from "../../providers/AuthProvider";
+import { Link } from "react-router-dom";
 
 export function Header() {
 	const { toggleTheme, theme } = useTheme();
@@ -10,7 +11,9 @@ export function Header() {
 
 	return (
 		<HeaderContainer>
-			<Title>TODO</Title>
+			<Link to="/" style={{ textDecoration: "none" }}>
+				<Title>TODO</Title>
+			</Link>
 
 			{isAuthenticated && <button onClick={handleLogout}>Logout</button>}
 
