@@ -14,6 +14,7 @@ interface TodosContextData {
 	incompleted: number;
 	total: number;
 	todosListOptions: option;
+	isLoading: boolean;
 	handleCreateTodo: (data: TodoInput) => Promise<void>;
 	handleDeleteTodo: (id: string) => Promise<void>;
 	handleDeleteCompletedTodos: () => Promise<void>;
@@ -31,6 +32,7 @@ export const TodosProvider: React.FC = ({ children }) => {
 	const [incompleted, setIncompleted] = useState(0);
 	const [total, setTotal] = useState(0);
 	const [todosListOptions, setTodosListOptions] = useState<option>("all");
+	const [isLoading, setLoading] = useState(false);
 
 	const getTodosData = useCallback(async (option: option): Promise<void> => {
 		const getTodosResponse = await api.get("/todos", {
@@ -48,19 +50,31 @@ export const TodosProvider: React.FC = ({ children }) => {
 		setIncompleted(incompleted);
 	}, []);
 
+	const fetchDataAndUpdateLoading = useCallback(
+		async (option: option) => {
+			try {
+				setLoading(true);
+				await getTodosData(option);
+			} catch {
+				console.log("error on fetch");
+			} finally {
+				setLoading(false);
+			}
+		},
+		[getTodosData]
+	);
+
 	useEffect(() => {
 		if (token) {
 			api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-			getTodosData(todosListOptions);
-		}
-
-		if (!token) {
+			fetchDataAndUpdateLoading(todosListOptions);
+		} else {
 			setTodos([]);
 			setTotal(0);
 			setIncompleted(0);
 			setTodosListOptions("all");
 		}
-	}, [getTodosData, todosListOptions, token]);
+	}, [fetchDataAndUpdateLoading, todosListOptions, token]);
 
 	async function handleCreateTodo(data: TodoInput): Promise<void> {
 		await api.post("/todos", {
@@ -117,6 +131,7 @@ export const TodosProvider: React.FC = ({ children }) => {
 	return (
 		<TodosContext.Provider
 			value={{
+				isLoading,
 				todos,
 				total,
 				incompleted,

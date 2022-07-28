@@ -11,6 +11,14 @@ export const TodosListContainer = styled.div`
 	flex-direction: column;
 `;
 
+export const LoadingContainer = styled.div`
+	width: 100%;
+	padding: 1.25rem 2rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`;
+
 export const TodoContainer = styled.li`
 	width: 100%;
 	padding: 1.25rem 2rem;
