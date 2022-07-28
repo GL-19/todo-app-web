@@ -5,7 +5,6 @@ interface ProtectedRouteProps {
 }
 
 export function ProtectedRoute({ isAuthenticated }: ProtectedRouteProps) {
-	console.log(isAuthenticated);
 	if (!isAuthenticated) {
 		return <Navigate to="/" />;
 	}

@@ -5,8 +5,7 @@ import { ProtectedRoute } from "./ProtectedRoute";
 import { PublicRoute } from "./PublicRoute";
 
 export function Router() {
-	const { isAuthenticated, user } = useAuth();
-	console.log(isAuthenticated, user);
+	const { isAuthenticated } = useAuth();
 
 	return (
 		<BrowserRouter>

@@ -5,7 +5,6 @@ interface PublicRouteProps {
 }
 
 export function PublicRoute({ isAuthenticated }: PublicRouteProps) {
-	console.log(isAuthenticated);
 	if (isAuthenticated) {
 		return <Navigate to="/todo-list" />;
 	}

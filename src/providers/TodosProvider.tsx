@@ -53,6 +53,13 @@ export const TodosProvider: React.FC = ({ children }) => {
 			api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 			getTodosData(todosListOptions);
 		}
+
+		if (!token) {
+			setTodos([]);
+			setTotal(0);
+			setIncompleted(0);
+			setTodosListOptions("all");
+		}
 	}, [getTodosData, todosListOptions, token]);
 
 	async function handleCreateTodo(data: TodoInput): Promise<void> {

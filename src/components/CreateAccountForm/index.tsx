@@ -25,8 +25,6 @@ export function CreateAccountForm() {
 
 			setError(false);
 
-			console.log(name, email, password);
-
 			await handleSignup({ name, email, password });
 
 			navigate("/");
