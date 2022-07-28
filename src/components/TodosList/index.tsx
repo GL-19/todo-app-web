@@ -12,17 +12,36 @@ import {
 	LoadingContainer,
 } from "./styles";
 import loading from "../../images/loading.svg";
+import { useEffect, useState } from "react";
+import { Todo } from "../../interfaces/Todo";
 
 function TodosList() {
+	const [todosUi, setTodosUi] = useState<Todo[]>([]);
 	const { todos, isLoading, handleToggleDone, handleDeleteTodo, handleChangeTodoOrder } =
 		useTodos();
 	const isDesktop = useMediaQuery();
+
+	useEffect(() => {
+		setTodosUi(todos);
+	}, [todos]);
+
+	function updateUiOnDragEnd(id: string, newIndex: number) {
+		const movedTodo = todos.find((todo) => todo.id === id) as Todo;
+
+		const newTodosUi = todosUi.filter((todo) => todo.id !== id);
+		newTodosUi.splice(newIndex, 0, movedTodo);
+
+		setTodosUi(newTodosUi);
+	}
 
 	function handleOnDragEnd(result: DropResult): void {
 		if (!result.destination) return;
 
 		const id = result.draggableId;
-		const newOrder = todos[result.destination.index].order;
+		const newIndex = result.destination.index;
+		const newOrder = todos[newIndex].order;
+
+		updateUiOnDragEnd(id, newIndex);
 
 		handleChangeTodoOrder(id, newOrder);
 	}
@@ -39,7 +58,7 @@ function TodosList() {
 						<Droppable droppableId="todos">
 							{(provided) => (
 								<ul {...provided.droppableProps} ref={provided.innerRef}>
-									{todos.map((todo, index) => (
+									{todosUi.map((todo, index) => (
 										<Draggable key={todo.id} draggableId={todo.id} index={index}>
 											{(provided) => (
 												<TodoContainer
