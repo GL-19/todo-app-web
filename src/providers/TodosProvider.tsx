@@ -19,8 +19,8 @@ interface TodosContextData {
 	handleDeleteTodo: (id: string) => Promise<void>;
 	handleDeleteCompletedTodos: () => Promise<void>;
 	handleToggleDone: (id: string) => Promise<void>;
-	handleChangeTodoOrder: (id: string, newOrder: number) => void;
-	handleChangeTodosListOptions: (option: option) => void;
+	handleChangeTodoOrder: (id: string, newOrder: number) => Promise<void>;
+	handleChangeTodosListOptions: (option: option) => Promise<void>;
 }
 
 export const TodosContext = createContext<TodosContextData>({} as TodosContextData);
@@ -56,7 +56,7 @@ export const TodosProvider: React.FC = ({ children }) => {
 				setLoading(true);
 				await getTodosData(option);
 			} catch {
-				console.log("error on fetch");
+				console.log("error on getTodosData");
 			} finally {
 				setLoading(false);
 			}
@@ -77,23 +77,39 @@ export const TodosProvider: React.FC = ({ children }) => {
 	}, [fetchDataAndUpdateLoading, todosListOptions, token]);
 
 	async function handleCreateTodo(data: TodoInput): Promise<void> {
-		await api.post("/todos", {
-			name: data.name,
-		});
+		try {
+			await api.post("/todos", {
+				name: data.name,
+			});
 
-		await getTodosData(todosListOptions);
+			await getTodosData(todosListOptions);
+		} catch {
+			console.log("Error, could not create todo!");
+			throw new Error("Error, could not create todo!");
+		}
 	}
 
 	async function handleToggleDone(id: string): Promise<void> {
-		await api.patch(`/todos/${id}`);
+		// throw new Error("mock error");
+		try {
+			await api.patch(`/todos/${id}`);
 
-		await getTodosData(todosListOptions);
+			await getTodosData(todosListOptions);
+		} catch {
+			console.log(`Error: could not toggle isDone of todo ${id}`);
+			throw new Error(`Error: could not toggle isDone of todo ${id}`);
+		}
 	}
 
 	async function handleDeleteTodo(id: string): Promise<void> {
-		await api.delete(`/todos/${id}`);
+		try {
+			await api.delete(`/todos/${id}`);
 
-		await getTodosData(todosListOptions);
+			await getTodosData(todosListOptions);
+		} catch {
+			console.log(`Error: could not delete todo ${id}`);
+			throw new Error(`Error: could not delete todo ${id}`);
+		}
 	}
 
 	async function handleDeleteCompletedTodos(): Promise<void> {
@@ -106,7 +122,7 @@ export const TodosProvider: React.FC = ({ children }) => {
 		await getTodosData(todosListOptions);
 	}
 
-	async function handleChangeTodosListOptions(option: option) {
+	async function handleChangeTodosListOptions(option: option): Promise<void> {
 		setTodosListOptions(option);
 
 		const response = await api.get("/todos", {
@@ -119,13 +135,18 @@ export const TodosProvider: React.FC = ({ children }) => {
 		setTodos(todos);
 	}
 
-	async function handleChangeTodoOrder(id: string, newOrder: number) {
-		await api.post("/todos/change-order", {
-			id,
-			newOrder,
-		});
+	async function handleChangeTodoOrder(id: string, newOrder: number): Promise<void> {
+		try {
+			await api.post("/todos/change-order", {
+				id,
+				newOrder,
+			});
 
-		await getTodosData(todosListOptions);
+			await getTodosData(todosListOptions);
+		} catch {
+			console.log(`Error: could not change the order of todo ${id}`);
+			throw new Error(`Error: could not change the order of todo ${id}`);
+		}
 	}
 
 	return (

@@ -34,16 +34,51 @@ function TodosList() {
 		setTodosUi(newTodosUi);
 	}
 
-	function handleOnDragEnd(result: DropResult): void {
+	async function handleOnDragEnd(result: DropResult): Promise<void> {
 		if (!result.destination) return;
 
-		const id = result.draggableId;
-		const newIndex = result.destination.index;
-		const newOrder = todos[newIndex].order;
+		try {
+			const id = result.draggableId;
+			const newIndex = result.destination.index;
+			const newOrder = todos[newIndex].order;
 
-		updateUiOnDragEnd(id, newIndex);
+			updateUiOnDragEnd(id, newIndex);
+			await handleChangeTodoOrder(id, newOrder);
+		} catch (error) {
+			console.log(error);
+			setTodosUi(todos);
+		}
+	}
 
-		handleChangeTodoOrder(id, newOrder);
+	async function handleOnClickDelete(id: string): Promise<void> {
+		try {
+			const newTodosUi = todosUi.filter((todo) => todo.id !== id);
+			setTodosUi(newTodosUi);
+
+			await handleDeleteTodo(id);
+		} catch (error) {
+			console.log(error);
+			setTodosUi(todos);
+		}
+	}
+
+	async function handleOnClickCheckBox(id: string): Promise<void> {
+		try {
+			const newTodosUi = todosUi.map((todo) => {
+				if (todo.id === id) {
+					todo.isDone = !todo.isDone;
+				}
+				return todo;
+			});
+
+			setTodosUi(newTodosUi);
+
+			await handleToggleDone(id);
+		} catch (error) {
+			console.log(error);
+			setTimeout(() => setTodosUi(todos), 1000);
+			// setTodosUi(todos);
+		}
 	}
 
 	return (
@@ -69,13 +104,13 @@ function TodosList() {
 													<div>
 														<CheckBox
 															isActive={todo.isDone}
-															onClick={() => handleToggleDone(todo.id)}
+															onClick={() => handleOnClickCheckBox(todo.id)}
 														/>
 													</div>
 
 													<TodoName isActive={todo.isDone}>{todo.name}</TodoName>
 													<div>
-														<DeleteIcon onClick={() => handleDeleteTodo(todo.id)} />
+														<DeleteIcon onClick={() => handleOnClickDelete(todo.id)} />
 													</div>
 												</TodoContainer>
 											)}
