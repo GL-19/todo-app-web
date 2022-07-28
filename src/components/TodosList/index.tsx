@@ -34,6 +34,17 @@ function TodosList() {
 		setTodosUi(newTodosUi);
 	}
 
+	function toggleTodoUiIsDone(id: string) {
+		const newTodosUi = todosUi.map((todo) => {
+			if (todo.id === id) {
+				todo.isDone = !todo.isDone;
+			}
+			return todo;
+		});
+
+		setTodosUi(newTodosUi);
+	}
+
 	async function handleOnDragEnd(result: DropResult): Promise<void> {
 		if (!result.destination) return;
 
@@ -64,20 +75,11 @@ function TodosList() {
 
 	async function handleOnClickCheckBox(id: string): Promise<void> {
 		try {
-			const newTodosUi = todosUi.map((todo) => {
-				if (todo.id === id) {
-					todo.isDone = !todo.isDone;
-				}
-				return todo;
-			});
-
-			setTodosUi(newTodosUi);
-
+			toggleTodoUiIsDone(id);
 			await handleToggleDone(id);
 		} catch (error) {
 			console.log(error);
-			setTimeout(() => setTodosUi(todos), 1000);
-			// setTodosUi(todos);
+			toggleTodoUiIsDone(id);
 		}
 	}
 

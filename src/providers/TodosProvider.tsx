@@ -90,7 +90,6 @@ export const TodosProvider: React.FC = ({ children }) => {
 	}
 
 	async function handleToggleDone(id: string): Promise<void> {
-		// throw new Error("mock error");
 		try {
 			await api.patch(`/todos/${id}`);
 
