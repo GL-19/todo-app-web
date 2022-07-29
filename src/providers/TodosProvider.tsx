@@ -171,6 +171,5 @@ export const TodosProvider: React.FC = ({ children }) => {
 
 export function useTodos() {
 	const context = useContext(TodosContext);
-
 	return context;
 }

@@ -3,5 +3,5 @@ export interface Todo {
 	name: string;
 	order: number;
 	isDone: boolean;
-	created_at: string;
+	created_at?: string;
 }
