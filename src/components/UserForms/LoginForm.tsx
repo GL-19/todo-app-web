@@ -27,16 +27,15 @@ export function LoginForm() {
 	} = useForm<ILoginFormInputs>({
 		resolver: yupResolver(LoginSchema),
 	});
-
-	const [error, setError] = useState(false);
+	const [authFailure, setAuthFailure] = useState(false);
 
 	async function onSubmit(data: ILoginFormInputs) {
 		try {
-			setError(false);
+			setAuthFailure(false);
 
 			await handleLogin(data.email, data.password);
 		} catch {
-			setError(true);
+			setAuthFailure(true);
 		}
 	}
 
@@ -50,7 +49,7 @@ export function LoginForm() {
 			<Input placeholder="Password" type="password" {...register("password")} />
 			<ErrorMsg>{errors.password?.message}</ErrorMsg>
 
-			{error && <ErrorMsg>Email or Password incorrect!</ErrorMsg>}
+			{authFailure && <ErrorMsg>Email or Password incorrect!</ErrorMsg>}
 			<SubmitButton type="submit">Login</SubmitButton>
 		</FormContainer>
 	);

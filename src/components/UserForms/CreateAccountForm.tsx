@@ -16,9 +16,12 @@ export interface ICreateAccountFormInputs {
 
 const CreateAccountSchema = yup
 	.object({
-		name: yup.string().min(3).required("Name is required"),
+		name: yup.string().min(3, "Min length of 3 characthers").required("Name is required"),
 		email: yup.string().email("Invalid Email").required("Email is required"),
-		password: yup.string().min(5).required("Password is required"),
+		password: yup
+			.string()
+			.min(5, "Min length of 5 characthers")
+			.required("Password is required"),
 		confirmPassword: yup
 			.string()
 			.oneOf([yup.ref("password")], "Passwords do not match.")
@@ -36,20 +39,19 @@ export function CreateAccountForm() {
 		resolver: yupResolver(CreateAccountSchema),
 	});
 	const { handleSignup } = useAuth();
-	const [error, setError] = useState(false);
+	const [emailInUse, setEmailInUse] = useState(false);
 
 	async function onSubmit(data: ICreateAccountFormInputs) {
-		console.log(data);
 		if (data.password !== data.confirmPassword) {
-			setError(true);
+			setEmailInUse(true);
 			return;
 		}
 		try {
-			setError(false);
+			setEmailInUse(false);
 			await handleSignup({ name: data.name, email: data.email, password: data.password });
 			navigate("/");
 		} catch {
-			setError(true);
+			setEmailInUse(true);
 		}
 	}
 
@@ -70,10 +72,14 @@ export function CreateAccountForm() {
 			<ErrorMsg>{errors.password?.message}</ErrorMsg>
 
 			<Label>Confirm Password:</Label>
-			<Input placeholder="Password" type="password" {...register("confirmPassword")} />
+			<Input
+				placeholder="Confirm password"
+				type="password"
+				{...register("confirmPassword")}
+			/>
 			<ErrorMsg>{errors.confirmPassword?.message}</ErrorMsg>
 
-			{error && <ErrorMsg>An error ocurred!</ErrorMsg>}
+			{emailInUse && <ErrorMsg>Email already in use</ErrorMsg>}
 			<SubmitButton type="submit">Register</SubmitButton>
 		</FormContainer>
 	);
