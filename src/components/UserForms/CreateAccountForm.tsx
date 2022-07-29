@@ -1,33 +1,33 @@
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 import { useAuth } from "../../providers/AuthProvider";
 import { FormContainer, Input, Label, SubmitButton } from "./components";
 
+export interface ICreateAccountFormData {
+	name: string;
+	email: string;
+	password: string;
+	repeatPassword: string;
+}
+
 export function CreateAccountForm() {
 	const { handleSignup } = useAuth();
+	const { register, handleSubmit } = useForm<ICreateAccountFormData>();
 	const navigate = useNavigate();
-
-	const [name, setName] = useState("");
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [repeatPassword, setRepeatPassword] = useState("");
 
 	const [error, setError] = useState(false);
 
-	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-		if (password !== repeatPassword) {
+	async function onSubmit(data: ICreateAccountFormData) {
+		console.log(data);
+		if (data.password !== data.repeatPassword) {
 			setError(true);
 			return;
 		}
-
 		try {
-			event.preventDefault();
-
 			setError(false);
-
-			await handleSignup({ name, email, password });
-
+			await handleSignup({ name: data.name, email: data.email, password: data.password });
 			navigate("/");
 		} catch {
 			setError(true);
@@ -35,40 +35,20 @@ export function CreateAccountForm() {
 	}
 
 	return (
-		<FormContainer onSubmit={handleSubmit}>
+		<FormContainer onSubmit={handleSubmit(onSubmit)}>
 			<h2>Register</h2>
 
 			<Label>Name:</Label>
-			<Input
-				placeholder="Name"
-				type="text"
-				value={name}
-				onChange={(event) => setName(event.target.value)}
-			/>
+			<Input type="text" placeholder="Name" {...register("name")} />
 
 			<Label>Email:</Label>
-			<Input
-				placeholder="Email"
-				type="email"
-				value={email}
-				onChange={(event) => setEmail(event.target.value)}
-			/>
+			<Input placeholder="Email" type="email" {...register("email")} />
 
 			<Label>Password:</Label>
-			<Input
-				placeholder="Password"
-				type="password"
-				value={password}
-				onChange={(event) => setPassword(event.target.value)}
-			/>
+			<Input placeholder="Password" type="password" {...register("password")} />
 
 			<Label>Repeat Password:</Label>
-			<Input
-				placeholder="Repeat Password"
-				type="password"
-				value={repeatPassword}
-				onChange={(event) => setRepeatPassword(event.target.value)}
-			/>
+			<Input placeholder="Password" type="password" {...register("repeatPassword")} />
 
 			{error && <p>Password must match!</p>}
 			<SubmitButton type="submit">Register</SubmitButton>
