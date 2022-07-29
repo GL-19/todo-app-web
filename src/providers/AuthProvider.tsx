@@ -69,6 +69,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 		} catch (error) {
 			console.log("Signup failed!");
 			console.log(error);
+			throw new Error("Signup failed!");
 		}
 	}
 
