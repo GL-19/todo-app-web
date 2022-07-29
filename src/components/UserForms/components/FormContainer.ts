@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Label } from "./Label";
 
 export const FormContainer = styled.form`
 	display: flex;
@@ -13,7 +12,7 @@ export const FormContainer = styled.form`
 
 	background-color: ${({ theme }) => theme.colors.secondaryBackgroundColor};
 
-	${Label} {
+	label {
 		margin-top: 1rem;
 	}
 

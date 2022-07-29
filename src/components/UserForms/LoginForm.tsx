@@ -1,44 +1,36 @@
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../../providers/AuthProvider";
+import { useForm } from "react-hook-form";
 import { FormContainer, Input, SubmitButton, Label } from "./components";
+
+interface ILoginFormData {
+	email: string;
+	password: string;
+}
 
 export function LoginForm() {
 	const { handleLogin } = useAuth();
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
+	const { register, handleSubmit } = useForm<ILoginFormData>();
+
 	const [error, setError] = useState(false);
 
-	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+	async function onSubmit(data: ILoginFormData) {
 		try {
-			event.preventDefault();
-
 			setError(false);
 
-			await handleLogin(email, password);
+			await handleLogin(data.email, data.password);
 		} catch {
 			setError(true);
 		}
 	}
 
 	return (
-		<FormContainer onSubmit={handleSubmit}>
+		<FormContainer onSubmit={handleSubmit(onSubmit)}>
 			<Label>Email: </Label>
-			<Input
-				id="email"
-				placeholder="E-mail"
-				type="email"
-				value={email}
-				onChange={(event) => setEmail(event.target.value)}
-			/>
+			<Input placeholder="Email" type="email" {...register("email")} />
 
 			<Label>Password: </Label>
-			<Input
-				id="password"
-				placeholder="Password"
-				type="password"
-				value={password}
-				onChange={(event) => setPassword(event.target.value)}
-			/>
+			<Input placeholder="Password" type="password" {...register("password")} />
 
 			{error && <p>Email or Password incorrect!</p>}
 			<SubmitButton type="submit">Login</SubmitButton>

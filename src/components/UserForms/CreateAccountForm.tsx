@@ -13,9 +13,9 @@ export interface ICreateAccountFormData {
 }
 
 export function CreateAccountForm() {
-	const { handleSignup } = useAuth();
-	const { register, handleSubmit } = useForm<ICreateAccountFormData>();
 	const navigate = useNavigate();
+	const { register, handleSubmit } = useForm<ICreateAccountFormData>();
+	const { handleSignup } = useAuth();
 
 	const [error, setError] = useState(false);
 
