@@ -78,8 +78,8 @@ function TodosList() {
 			toggleTodoUiIsDone(id);
 			await handleToggleDone(id);
 		} catch (error) {
-			console.log(error);
 			toggleTodoUiIsDone(id);
+			console.log(error);
 		}
 	}
 
