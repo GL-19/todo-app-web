@@ -64,7 +64,7 @@ export function CreateAccountForm() {
 			<ErrorMsg>{errors.name?.message}</ErrorMsg>
 
 			<Label>Email:</Label>
-			<Input placeholder="Email" type="email" {...register("email")} />
+			<Input placeholder="Email" {...register("email")} />
 			<ErrorMsg>{errors.email?.message}</ErrorMsg>
 
 			<Label>Password:</Label>

@@ -31,5 +31,6 @@ export const lightColors: IColors = {
 	tertiaryColor: "hsl(234, 39%, 85%)",
 	quaternaryColor: "hsl(233, 11%, 84%)",
 	secondaryBackgroundColor: "hsl(0, 0%, 98%)",
-	primaryBackgroundColor: "hsl(235, 40%, 75%)",
+	primaryBackgroundColor: "hsl(210, 10%, 80%)",
+	/* primaryBackgroundColor: "hsl(235, 40%, 75%)", */
 };

@@ -8,7 +8,7 @@ export const Input = styled.input`
 	border-radius: 5px;
 
 	color: ${({ theme }) => theme.colors.primaryColor};
-	background-color: ${({ theme }) => theme.colors.quaternaryColor};
+	background-color: ${({ theme }) => theme.colors.primaryBackgroundColor};
 	border: none;
 
 	&:focus {

@@ -11,7 +11,7 @@ export const Input = styled.input`
 	height: 100%;
 
 	padding: 1rem 2rem;
-	border-radius: 5px;
+	border-radius: 5px 0 0 5px;
 
 	@media screen and (max-width: 850px) {
 		padding: 1rem 1.25rem;
@@ -44,7 +44,7 @@ export const SubmitButton = styled.button`
 
 	background-color: ${({ theme }) => theme.colors.quaternaryColor};
 	border: none;
-	border-radius: 5px;
+	border-radius: 0 5px 5px 0;
 
 	&:hover,
 	&:active {

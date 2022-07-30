@@ -15,7 +15,7 @@ export const SubmitButton = styled.button`
 	text-align: center;
 	text-transform: uppercase;
 
-	background-color: ${({ theme }) => theme.colors.primaryBackgroundColor};
+	background-color: ${({ theme }) => theme.colors.quaternaryColor};
 	border: none;
 	border-radius: 5px;
 
